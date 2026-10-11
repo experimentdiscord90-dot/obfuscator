@@ -1291,16 +1291,13 @@ function serializeProto(p, out, opmap, stats, prng_next, keys, chunkCounter){
   const vmFamily = chunkIdx % 3;
   const codec = bgDeriveCodec(chunkIdx, vmFamily);
 
-  // 11-byte codec header
   out.push(codec.add, codec.invMul, codec.xor, codec.rot, codec.vmFamily);
   out.push(codec.byteAdd[1], codec.byteAdd[2], codec.byteAdd[3]);
   out.push(codec.byteXor[1], codec.byteXor[2], codec.byteXor[3]);
 
-  // 4-byte proto header
   out.push(p.isVararg?1:0, p.nparam&255, p.nstack&255, p.upvals.length&255);
   for(const u of p.upvals){ out.push(u.instack?1:0); w16(out,u.idx); }
 
-  // Constants
   w16(out, p.consts.length);
   for(const cv of p.consts){
     stats.consts++;
@@ -1320,13 +1317,11 @@ function serializeProto(p, out, opmap, stats, prng_next, keys, chunkCounter){
     }
   }
 
-  // Children
   w16(out, p.protos.length);
   for(const sp of p.protos){
     serializeProto(sp, out, opmap, stats, prng_next, keys, chunkCounter);
   }
 
-  // Code — 5 bytes per instruction: op, a, b_hi, b_lo, c
   w32(out, p.code.length);
   stats.instrs += p.code.length;
   for(const ins of p.code){
@@ -1345,7 +1340,7 @@ function serializeProto(p, out, opmap, stats, prng_next, keys, chunkCounter){
   stats.protos++;
 }
 
-/* ---- Structural verifier (bounds-checked, big-endian, 5-byte insns) ---- */
+/* ---- Structural verifier ---- */
 function bgVerifyPayload(bytes, blobKey) {
   const n = bytes.length;
   if (n < 16) throw new Error('payload shorter than 16 bytes');
@@ -1861,7 +1856,7 @@ function genVM(o){
   w(`  local t = ${ty}(v)`);
   w(`  if t == "string" or t == "table" then return #v end`);
   w(`  local m = ${getmt}(v)`);
-  w(`  if m then local h = ${rg}(m, ${mmlen}) if h ~= nil then if ${ty}(h) == "function" then return h(v) end return h end end end`);
+  w(`  if m then local h = ${rg}(m, ${mmlen}) if h ~= nil then if ${ty}(h) == "function" then return h(v) end return h end end`);
   w(`  ${er}("${rerr()}", 0)`);
   w(`end`);
   const ef=G('eqf'),ltf=G('ltf'),lef=G('lef');
@@ -2051,7 +2046,6 @@ function packReturnTable(code){
   return `return({[${key}]=[${eq}[${code}]${eq}]})`;
 }
 
-/* ---- Preset profiles ---- */
 const PROFILES = {
   light:  { packWrapper:true, oneLine:true, banner:true, paged:false, v2:false, junk:false, strEnc:true, controlFlow:false, shuffle:true,  deadCode:false, decoy:false, antiHook:false, tamperDecoys:false, opcodeDecoys:false, stealth:false, adaptiveJunk:false, junkMaxBytes:0 },
   medium: { packWrapper:true, oneLine:true, banner:true, paged:true,  v2:false, junk:true,  strEnc:true, controlFlow:true,  shuffle:true,  deadCode:true,  decoy:true,  antiHook:true,  tamperDecoys:true,  opcodeDecoys:true,  stealth:true,  adaptiveJunk:true,  junkMaxBytes:4096 },
@@ -2106,17 +2100,14 @@ function obfuscate(src,opts){
   const chunkCounter = { n: 0 };
   serializeProto(main, bytes, opmap, stats, prng_next, { strKey }, chunkCounter);
 
-  // FNV over proto tree
   let auth=2166136261;
   for(let i=0;i<bytes.length;i++) auth=((((auth^bytes[i])>>>0)*33)+blobKey[i%blobKey.length])>>>0;
   w32(bytes,auth);
 
-  // Adler over proto tree + FNV
   let s1=0,s2=0;
   for(let i=0;i<bytes.length;i++){ s1=(s1+bytes[i])%65521; s2=(s2+s1)%65521; }
   w32(bytes,(s2*65536)+s1);
 
-  // ---- payload self-check ----
   let verifyStats = null;
   try {
     verifyStats = bgVerifyPayload(new Uint8Array(bytes), blobKey);
@@ -2142,10 +2133,9 @@ function obfuscate(src,opts){
   const vmOptions={blob,blobKey,strKey,alphabet,opmap,prngSeed,buildId,pages,pageOrder,flags:opts};
   const rawCode=genVM(vmOptions);
 
-  // ---- Lua self-check: WARNING ONLY, not fatal ----
-  // The payload self-check above already validated bytecode structure.
-  // Our Lua parser can produce false positives on valid Lua, so we log
-  // a warning and continue rather than blocking output.
+  // Lua self-check is a WARNING only, since our parser can produce false
+  // positives on valid Lua. The payload self-check above already validated
+  // bytecode structure.
   let luaWarn = null;
   try {
     const toks = tokenize(rawCode);
@@ -2156,7 +2146,6 @@ function obfuscate(src,opts){
     luaWarn = e.message;
     if (typeof console !== 'undefined') {
       console.warn('[HAFIY] Lua self-check warning:', e.message);
-      console.warn('[HAFIY] Generated payload:\n', rawCode);
     }
   }
 
@@ -2184,7 +2173,6 @@ if (typeof module !== 'undefined' && module.exports) {
   window.obfuscate = obfuscate;
 }
 
-/* ---- UI handlers ---- */
 const LS_KEY = 'hafiy_opts_v1';
 function loadOpts(){ try{ const raw = lsG(LS_KEY); if(!raw) return null; return JSON.parse(raw); }catch(e){ return null; } }
 function saveOpts(o){ try{ lsS(LS_KEY, JSON.stringify(o)); }catch(e){} }
