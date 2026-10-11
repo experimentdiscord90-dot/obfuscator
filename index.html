@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HAFIY HUB</title>
+<style>
+*{margin:0;box-sizing:border-box}
+body{background:#05060a;color:#e8e8f0;font-family:system-ui,'Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:-2;background:radial-gradient(1100px 700px at 85% -10%,#1b1035 0%,transparent 60%),radial-gradient(900px 650px at -10% 110%,#0a1a33 0%,transparent 60%),#05060a}
+.bg::before{content:"";position:absolute;inset:-40%;background:radial-gradient(420px 420px at 30% 40%,rgba(139,92,246,.16),transparent 70%),radial-gradient(520px 520px at 70% 60%,rgba(236,72,153,.12),transparent 70%),radial-gradient(360px 360px at 55% 25%,rgba(34,211,238,.10),transparent 70%);animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{from{transform:rotate(0deg) translate(0,0)}to{transform:rotate(6deg) translate(3%,-3%)}}
+.gridfx{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 0%,#000 0%,transparent 75%)}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:linear-gradient(#7c3aed,#ec4899);border-radius:8px}::-webkit-scrollbar-track{background:transparent}
+.lg{font-weight:800;background:linear-gradient(90deg,#8b5cf6,#ec4899,#22d3ee,#8b5cf6);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;font-size:24px;letter-spacing:.5px;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:300% 0}}
+#gate{position:fixed;inset:0;background:rgba(5,6,10,.55);backdrop-filter:blur(6px);z-index:9;display:flex;align-items:center;justify-content:center}
+.gb{background:rgba(18,18,30,.75);backdrop-filter:blur(18px);border:1px solid rgba(139,92,246,.3);border-radius:20px;padding:34px 28px;width:320px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 45px rgba(139,92,246,.15);animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.gb input{width:100%;background:rgba(10,10,20,.7);border:1px solid rgba(139,92,246,.3);border-radius:12px;padding:12px;color:#fff;text-align:center;margin:12px 0;outline:none;transition:.25s}
+.gb input:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.2)}
+nav{display:flex;gap:8px;padding:10px 14px;position:sticky;top:10px;z-index:5;margin:12px auto 0;max-width:920px;background:rgba(15,15,26,.65);backdrop-filter:blur(16px);border:1px solid rgba(139,92,246,.18);border-radius:16px;flex-wrap:wrap;align-items:center;box-shadow:0 10px 35px rgba(0,0,0,.4)}
+.lg.sm{font-size:17px;margin-right:auto}
+.t{background:transparent;border:1px solid transparent;color:#9a9ab0;padding:8px 15px;border-radius:999px;font-weight:700;font-size:12px;cursor:pointer;transition:.2s}
+.t:hover{color:#fff;background:rgba(139,92,246,.12)}
+.t.on{color:#fff;background:linear-gradient(135deg,rgba(124,58,237,.4),rgba(236,72,153,.4));border-color:rgba(139,92,246,.45);box-shadow:0 0 16px rgba(139,92,246,.3)}
+.d{background:linear-gradient(135deg,#FF0000,#cc0000);color:#fff;text-decoration:none;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;box-shadow:0 4px 16px rgba(255,0,0,.35);transition:.2s}
+.d:hover{transform:translateY(-1px);filter:brightness(1.15)}
+section{display:none;max-width:920px;margin:0 auto;padding:16px;animation:fadeUp .4s ease}
+section.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}}
+h1{font-size:26px;text-align:center;margin:16px 0 4px;background:linear-gradient(90deg,#8b5cf6,#ec4899,#22d3ee);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s linear infinite}
+p.s{text-align:center;color:#9a9ab0;font-size:13px;margin-bottom:14px}
+.card{background:rgba(18,18,30,.6);backdrop-filter:blur(14px);border:1px solid rgba(139,92,246,.16);border-radius:18px;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.35);transition:.25s}
+.card:hover{border-color:rgba(139,92,246,.35);box-shadow:0 12px 45px rgba(0,0,0,.45),0 0 25px rgba(139,92,246,.1)}
+.b{border:0;cursor:pointer;padding:11px;border-radius:12px;font-weight:700;font-size:13px;color:#fff;background:linear-gradient(135deg,#7c3aed,#ec4899);width:100%;margin-top:6px;transition:.2s;box-shadow:0 4px 18px rgba(124,58,237,.35)}
+.b:hover{transform:translateY(-1px);filter:brightness(1.12);box-shadow:0 6px 26px rgba(124,58,237,.5)}
+.b:active{transform:scale(.98)}
+.b.g{background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 4px 18px rgba(16,185,129,.3)}
+.b.y{background:rgba(42,42,58,.9);box-shadow:none;border:1px solid rgba(139,92,246,.25)}
+.b.sm{width:auto;padding:8px 13px;font-size:12px;margin:0}
+textarea,input[type=text],select{width:100%;background:rgba(10,10,20,.7);border:1px solid rgba(139,92,246,.22);border-radius:12px;padding:10px;color:#fff;font-size:13px;margin:6px 0;outline:none;transition:.2s}
+textarea:focus,input[type=text]:focus,select:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+select{width:auto;padding:8px 10px;font-weight:600;cursor:pointer}
+textarea{min-height:110px;font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.r{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}
+label{color:#9a9ab0;font-size:12px}
+#st{font-size:12px;font-weight:700;color:#10b981}
+#st.bad{color:#ef4444}
+.ph{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.ph h2{flex:1;font-size:16px}
+pre.c{background:rgba(10,10,20,.7);border:1px solid rgba(139,92,246,.2);border-radius:12px;padding:10px;font:12px ui-monospace,Consolas,monospace;white-space:pre;overflow:auto;max-height:55vh;color:#d6d6ea}
+#rawOv{position:fixed;inset:0;background:#0b0b12;color:#e4e4e7;z-index:9;display:none;flex-direction:column;font-family:ui-monospace,Consolas,monospace}
+#rawNav{background:rgba(20,20,32,.9);backdrop-filter:blur(12px);padding:14px 20px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(139,92,246,.25)}
+#rawNav .logo{font-weight:800;background:linear-gradient(90deg,#8b5cf6,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:16px}
+#rawNav button{background:rgba(63,63,74,.8);color:#fff;border:1px solid rgba(139,92,246,.25);padding:8px 16px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.2s}
+#rawNav button:hover{background:#52525b;transform:translateY(-1px)}
+#rawNav .close{background:linear-gradient(135deg,#ef4444,#dc2626);border:0}
+#rawPre{flex:1;margin:0;padding:24px;font-size:14px;line-height:1.6;overflow:auto;white-space:pre;counter-reset:line}
+#rawPre span.line{display:block;counter-increment:line}
+#rawPre span.line::before{content:counter(line);display:inline-block;width:40px;text-align:right;margin-right:20px;color:#5b5b70;user-select:none}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(135deg,#059669,#10b981);padding:10px 20px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;pointer-events:none;transition:.3s;z-index:99;box-shadow:0 6px 25px rgba(16,185,129,.4)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#errPanel{display:none;background:rgba(30,10,10,.7);border:1px solid rgba(239,68,68,.4);border-radius:12px;padding:10px;font:11px ui-monospace,Consolas,monospace;white-space:pre-wrap;color:#fecaca;max-height:220px;overflow:auto;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="bg"></div><div class="gridfx"></div>
+<div id="gate"><div class="gb"><div class="lg">HAFIY HUB</div><p class="s">🔒 Enter access key</p><input id="keyIn" placeholder="Key..." onkeydown="if(event.key==='Enter')tryKey()"/><button class="b" onclick="tryKey()">UNLOCK</button><div id="keyErr" style="color:#ef4444;font-size:12px"></div></div></div>
+<script>
+function lsG(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function tryKey(){var v=(document.getElementById("keyIn").value||"").trim().toUpperCase();if(v==="HAFIYPRO"){lsS("hafiyKey","1");enter()}else document.getElementById("keyErr").textContent="❌ Wrong key!"}
+function enter(){document.getElementById("gate").style.display="none";document.getElementById("app").style.display="block";if(typeof route=="function")route()}
+</script>
+<div id="app" style="display:none">
+<nav>
+  <div class="lg sm">HAFIY HUB</div>
+  <button class="t on" onclick="showTab('paste',this)">Pastebin</button>
+  <button class="t" onclick="showTab('obf',this)">Obfuscator</button>
+  <a class="d" id="nd" href="#" target="_blank">YouTube</a>
+</nav>
+<section id="sec-paste" class="on">
+  <div id="pHome">
+    <h1>HAFIY PASTEBIN</h1>
+    <p class="s">Create → share → RAW + COPY</p>
+    <div class="card">
+      <input id="pT" placeholder="Title (optional)"/>
+      <textarea id="pB" placeholder="Paste text/script..."></textarea>
+      <button class="b" onclick="createPaste()">+ CREATE PASTE</button>
+      <div id="res"></div>
+    </div>
+  </div>
+  <div id="pView" style="display:none"></div>
+</section>
+<section id="sec-obf">
+  <h1>HAFIY GUARD</h1>
+  <p class="s">BG VM per-proto codec · FNV auth · Adler framing</p>
+  <div class="card">
+    <textarea id="si" placeholder="Paste Lua script... (Ctrl+Enter to obfuscate)"></textarea>
+    <div class="r">
+      <label>Profile:</label>
+      <select id="profile">
+        <option value="light">Light</option>
+        <option value="medium" selected>Medium</option>
+        <option value="max">Max</option>
+      </select>
+      <label><input type="checkbox" id="anti" checked/> Neutralize Env</label>
+      <label><input type="checkbox" id="safeJunk" checked/> Safe Junk</label>
+      <span id="st"></span>
+    </div>
+    <button class="b" onclick="runObf()">OBFUSCATE</button>
+    <textarea id="so" readonly placeholder="Output..."></textarea>
+    <button class="b g" onclick="copyText(document.getElementById('so').value)">COPY OUTPUT</button>
+    <button class="b y" onclick="dl()">DOWNLOAD .LUA</button>
+    <pre id="errPanel"></pre>
+  </div>
+</section>
+</div>
+
+<div id="rawOv">
+  <div id="rawNav">
+    <span class="logo">HAFIY RAW</span>
+    <button class="close" onclick="location.href=location.href.split('#')[0]">✕ Close</button>
+    <button onclick="copyText(document.getElementById('rawPre').textContent)">📋 Copy</button>
+  </div>
+  <pre id="rawPre"></pre>
+</div>
+<div id="toast"></div>
+
+<script>
+document.getElementById("nd").href="https://youtube.com/@hafiyscript";
+function showTab(i,b){document.querySelectorAll("section").forEach(function(s){s.classList.remove("on")});document.querySelectorAll(".t").forEach(function(t){t.classList.remove("on")});document.getElementById("sec-"+i).classList.add("on");b.classList.add("on");if(i==="paste")route()}
+function toastMsg(m,x){var t=document.getElementById("toast");t.textContent=m;t.style.background=x?"linear-gradient(135deg,#ef4444,#dc2626)":"linear-gradient(135deg,#059669,#10b981)";t.classList.add("show");setTimeout(function(){t.classList.remove("show")},1400)}
+function copyText(t){if(!t)return toastMsg("Nothing!",1);if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){toastMsg("Copied!")}).catch(function(){fallbackCopy(t)})}else fallbackCopy(t)}
+function fallbackCopy(t){var a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.top="-9999px";document.body.appendChild(a);a.select();document.execCommand("copy");a.remove();toastMsg("Copied!")}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function enc(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function dec(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return decodeURIComponent(escape(atob(s)))}
+function base(){return location.href.split("#")[0]}
+function route(){var h=location.hash;if(h.indexOf("#raw=")===0){var rawCode=dec(h.slice(5));document.getElementById("app").style.display="none";document.getElementById("rawOv").style.display="flex";var lines=rawCode.split('\n'),html='';for(var i=0;i<lines.length;i++)html+='<span class="line">'+esc(lines[i])+'</span>';document.getElementById("rawPre").innerHTML=html;return}document.getElementById("rawOv").style.display="none";document.getElementById("app").style.display="block";if(h.indexOf("#p=")===0)showPaste(h.slice(3));else{document.getElementById("pHome").style.display="block";document.getElementById("pView").style.display="none"}}
+addEventListener("hashchange",route);
+
+function uploadPaste(content, title) {
+  var PASTEFY_KEY = "SGcEa2hOrO55dwoGor2catvmX1QJ9NCfcTFZvXWynwOjJ2ooOdAmDPHT9pvH";
+  return fetch("https://pastefy.app/api/v2/paste", {
+    method: "POST",
+    headers: {"Content-Type":"application/json","Authorization":"Bearer " + PASTEFY_KEY},
+    body: JSON.stringify({type:"PASTE",title:title||"HAFIY PASTE",content:content,visibility:"UNLISTED",encrypted:false})
+  }).then(function(r) {
+    if (!r.ok) throw new Error("pastefy failed: " + r.status);
+    return r.json();
+  }).then(function(j) {
+    var id = (j.paste && j.paste.id) || j.id;
+    if (!id) throw new Error("pastefy no id");
+    return "https://pastefy.app/" + id + "/raw";
+  });
+}
+function createPaste(){
+  var t=document.getElementById("pT").value.trim()||"Untitled",c=document.getElementById("pB").value;
+  if(!c.trim())return toastMsg("Nothing!",1);
+  toastMsg("Uploading...");
+  uploadPaste(c, t).then(function(link){
+    document.getElementById("res").innerHTML='<div class="r"><input readonly id="nl"/><button class="b sm g" id="cl">COPY LINK</button><button class="b sm" id="op" style="margin-left:4px">OPEN</button></div>';
+    document.getElementById("nl").value=link;
+    document.getElementById("cl").onclick=function(){copyText(link)};
+    document.getElementById("op").onclick=function(){window.open(link,"_blank")};
+    document.getElementById("pB").value="";
+    toastMsg("Created!");
+  }).catch(function(){
+    var l=base()+"#p="+enc(JSON.stringify({t:t,c:c}));
+    document.getElementById("res").innerHTML='<div class="r"><input readonly id="nl"/><button class="b sm g" id="cl">COPY LINK</button></div>';
+    document.getElementById("nl").value=l;
+    document.getElementById("cl").onclick=function(){copyText(l)};
+    document.getElementById("pB").value="";
+    toastMsg("Offline: local link");
+  });
+}
+function showPaste(d){
+  var o;try{o=JSON.parse(dec(d))}catch(e){o={t:"Untitled",c:dec(d)}}
+  document.getElementById("pHome").style.display="none";
+  var v=document.getElementById("pView");v.style.display="block";
+  v.innerHTML='<div class="ph"><h2>'+esc(o.t)+'</h2><button class="b sm y" id="bR">RAW</button><button class="b sm g" id="bC">COPY</button><button class="b sm" id="bL">LINK</button><button class="b sm y" id="bH">NEW</button></div><pre class="c" id="cp"></pre>';
+  document.getElementById("cp").textContent=o.c;
+  document.getElementById("bR").onclick=function(){toastMsg("Uploading...");uploadPaste(o.c).then(function(link){copyText(link);window.open(link,"_blank")}).catch(function(){location.href=base()+"#raw="+enc(o.c)})};
+  document.getElementById("bC").onclick=function(){copyText(o.c)};
+  document.getElementById("bL").onclick=function(){copyText(base()+"#p="+d)};
+  document.getElementById("bH").onclick=function(){location.href=base()};
+}
+
+/* ============================================================
+   HAFIY GUARD — obfuscator pipeline
+   BG VM per-proto codec + FNV auth + Adler framing
+   ============================================================ */
+"use strict";
+
+/* ---- Secure RNG ---- */
+let _sCounter = 0;
+function secureU32(){
+  try{
+    if(globalThis.crypto && typeof globalThis.crypto.getRandomValues === 'function'){
+      const a = new Uint32Array(1);
+      globalThis.crypto.getRandomValues(a);
+      return a[0] >>> 0;
+    }
+  }catch(_e){}
+  _sCounter = (_sCounter + 1) >>> 0;
+  const t = Date.now() >>> 0;
+  const perf = (typeof performance !== 'undefined' && performance.now) ? (performance.now()*1000)>>>0 : 0;
+  return (t ^ ((Math.random()*0x100000000)>>>0) ^ perf ^ _sCounter) >>> 0;
+}
+let _s = secureU32();
+function rng(){ _s|=0; _s=_s+0x6D2B79F5|0; let t=Math.imul(_s^_s>>>15,1|_s); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }
+const ri = n => Math.floor(rng()*n);
+
+/* ---- Bit helpers ---- */
+const u32   = x => x >>> 0;
+const band  = (a,b) => ((a & b) >>> 0);
+const bor   = (a,b) => ((a | b) >>> 0);
+const bxorJS = (...xs) => { let r = xs[0] >>> 0; for(let i=1;i<xs.length;i++) r = (r ^ xs[i]) >>> 0; return r; };
+const lshiftJS = (a,n) => ((a << n) >>> 0);
+const rshiftJS = (a,n) => ((a >>> n) >>> 0);
+const imul32 = (a,b) => Math.imul(a,b) >>> 0;
+
+/* ---- Byte helpers ---- */
+function toUTF8(str){
+  const o=[];
+  for(let i=0;i<str.length;i++){
+    let c=str.codePointAt(i);
+    if(c>0xFFFF)i++;
+    if(c<0x80)o.push(c);
+    else if(c<0x800)o.push(0xC0|(c>>6),0x80|(c&63));
+    else if(c<0x10000)o.push(0xE0|(c>>12),0x80|((c>>6)&63),0x80|(c&63));
+    else o.push(0xF0|(c>>18),0x80|((c>>12)&63),0x80|((c>>6)&63),0x80|(c&63));
+  }
+  return o;
+}
+function xorBytes(bytes,key){
+  const o=new Array(bytes.length);
+  for(let i=0;i<bytes.length;i++)o[i]=bytes[i]^key[i%key.length];
+  return o;
+}
+function escLuaStr(s){
+  const b=toUTF8(s); let o=''; const bs=String.fromCharCode(92);
+  for(let i=0;i<b.length;i++){
+    const c=b[i];
+    if(c===34)o+=bs+'"';
+    else if(c===92)o+=bs+bs;
+    else if(c>=32&&c<127)o+=String.fromCharCode(c);
+    else o+=bs+String(c).padStart(3,'0');
+  }
+  return o;
+}
+function escLuaBytes(bytes){
+  let o=''; const bs=String.fromCharCode(92);
+  for(let i=0;i<bytes.length;i++) o += bs + String(bytes[i] & 255).padStart(3,'0');
+  return o;
+}
+function w16(a,v){const u=((v%65536)+65536)%65536;a.push((u>>8)&255,u&255);}
+function w32(a,v){a.push((v>>>24)&255,(v>>>16)&255,(v>>>8)&255,v&255);}
+function b64encode(bytes,alpha){
+  let out='',buf=0,nb=0;
+  for(let i=0;i<bytes.length;i++){
+    buf=(((buf<<8)>>>0)|bytes[i])>>>0; nb+=8;
+    while(nb>=6){ nb-=6; out+=alpha[(buf>>>nb)&63]; buf&=(1<<nb)-1; }
+  }
+  if(nb>0) out+=alpha[(buf<<(6-nb))&63];
+  return out;
+}
+function shuffledAlphabet(){
+  const arr='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+  for(let i=arr.length-1;i>0;i--){ const j=ri(i+1),t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+  return arr.join('');
+}
+function randomKeyBytes(n){ const a=[]; for(let i=0;i<n;i++)a.push(1+ri(255)); return a; }
+function shuffleArr(a){
+  for(let i=a.length-1;i>0;i--){ const j=ri(i+1),t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+function pageAdler(s){
+  let a=1,b=0;
+  for(let i=0;i<s.length;i++){ a=(a+s.charCodeAt(i))%65521; b=(b+a)%65521; }
+  return ((b*65536)+a)>>>0;
+}
+const _used=new Set();
+function genName(){
+  for(let tries=0;tries<999;tries++){
+    const style=ri(3);
+    let s='';
+    if(style===0){
+      const P=['l','I','1','i','I','l']; const len=6+ri(5);
+      for(let i=0;i<len;i++)s+=P[ri(P.length)];
+      if(rng()<.5)s='_'+s;
+    }else if(style===1){
+      const P=['O','0','o','Q','D']; const len=6+ri(4);
+      for(let i=0;i<len;i++)s+=P[ri(P.length)];
+    }else{
+      const P=['Zx','qv','Kn','Ww','Xx','Fj','Vv','Hh'];
+      s=P[ri(P.length)];
+      for(let i=0;i<3+ri(4);i++)s+='0123456789abcdefghijklmnopqrstuvwxyz'[ri(36)];
+    }
+    if(!/^[\w]+$/.test(s))continue;
+    if(!isNaN(Number(s[0])))s='_'+s;
+    if(!_used.has(s)){ _used.add(s); return s; }
+  }
+  return '_n'+(_used.size);
+}
+
+/* ---- BG codec primitives ---- */
+const BG_MAGIC = 834357041;
+const BG_K_OPCODE_MUL = 3403909123;
+const BG_K_RECORD_MUL = 4244580994;
+const BG_K_DISPATCH_MUL = 1502078625;
+const BG_K_OPERAND_MUL = 16817;
+const BG_SEED_MIX = 132136442;
+
+function bgMix(x){
+  x = bxorJS(x, lshiftJS(x, 9));
+  x = bxorJS(x, rshiftJS(x, 7));
+  x = bxorJS(x, lshiftJS(x, 17));
+  return x >>> 0;
+}
+function bgRotL8(x,n){ n &= 7; return ((x << n) | (x >>> (8 - n))) & 0xff; }
+function bgRotR8(x,n){ n &= 7; return ((x >>> n) | (x << (8 - n))) & 0xff; }
+function bgRotL32(x,n){ n &= 31; return (((x << n) | (x >>> (32 - n))) >>> 0); }
+function bgRotR32(x,n){ n &= 31; return (((x >>> n) | (x << (32 - n))) >>> 0); }
+
+function bgDeriveCodec(idx, vmFamily){
+  const h1 = bgMix(bxorJS(BG_MAGIC, imul32(idx + 1, BG_K_OPCODE_MUL)));
+  const add = h1 & 255;
+  const invMul = ((h1 >>> 8) & 255) | 1;
+  const xor = (h1 >>> 16) & 255;
+  const rot = 1 + (((h1 >>> 24) & 255) % 7);
+  let inv = 1;
+  for (let x = 1; x < 256; x += 2) if (((invMul * x) & 255) === 1) { inv = x; break; }
+
+  let G = bxorJS(BG_MAGIC, BG_SEED_MIX, imul32(idx + 1, BG_K_OPERAND_MUL));
+  const nextG = () => { G = bgMix(G); return G; };
+
+  const byteAdd = [0,0,0,0], byteXor = [0,0,0,0];
+  for (let i = 1; i <= 3; i++) {
+    const d = nextG();
+    byteAdd[i] = d & 255;
+    byteXor[i] = (d >>> 8) & 255;
+  }
+  return { vmFamily, add, invMul, xor, rot, inv, byteAdd, byteXor };
+}
+
+function bgEncOpcode(l, c){
+  if (c.vmFamily === 0) return (l * c.invMul + c.add) & 255;
+  if (c.vmFamily === 1) return ((l ^ c.xor) + c.add) & 255;
+  const r = (l + c.add) & 255;
+  return ((((r << c.rot) | (r >>> (8 - c.rot))) & 255) ^ c.xor);
+}
+function bgDecOpcode(raw, c){
+  if (c.vmFamily === 0) return ((raw - c.add) * c.inv) & 255;
+  if (c.vmFamily === 1) return (((raw - c.add) & 255) ^ c.xor) & 255;
+  const t = (raw ^ c.xor) & 255;
+  const r = ((t >>> c.rot) | (t << (8 - c.rot))) & 255;
+  return (r - c.add) & 255;
+}
+function bgEncByte(s, v, c){ return ((v ^ c.byteXor[s]) + c.byteAdd[s]) & 255; }
+function bgDecByte(s, e, c){ return (((e - c.byteAdd[s]) & 255) ^ c.byteXor[s]) & 255; }
+
+/* ---- Tokenizer ---- */
+const KW=new Set(['and','break','do','else','elseif','end','false','for','function','goto','if','in','local','nil','not','or','repeat','return','then','true','until','while']);
+function utf8cp(cp){
+  if(cp<0x80)return String.fromCharCode(cp);
+  if(cp<0x800)return String.fromCharCode(0xC0|(cp>>6),0x80|(cp&63));
+  if(cp<0x10000)return String.fromCharCode(0xE0|(cp>>12),0x80|((cp>>6)&63),0x80|(cp&63));
+  return String.fromCharCode(0xF0|(cp>>18),0x80|((cp>>12)&63),0x80|((cp>>6)&63),0x80|(cp&63));
+}
+function tokenize(src){
+  const T=[]; let i=0,line=1; const n=src.length;
+  const push=(type,value)=>T.push({type,value,line});
+  while(i<n){
+    const c=src[i];
+    if(c==='\n'){line++;i++;continue;}
+    if(c===' '||c==='\t'||c==='\r'||c==='\v'||c==='\f'){i++;continue;}
+    if(c==='-'&&src[i+1]==='-'){
+      i+=2;
+      if(src[i]==='['){
+        let eq=0,j=i+1;
+        while(src[j]==='='){eq++;j++;}
+        if(src[j]==='['){
+          const close=']'+'='.repeat(eq)+']';
+          const end=src.indexOf(close,j+1);
+          const stop=end===-1?n:end+close.length;
+          for(let k=i;k<stop;k++)if(src[k]==='\n')line++;
+          i=stop; continue;
+        }
+      }
+      while(i<n&&src[i]!=='\n')i++;
+      continue;
+    }
+    if(c==='['){
+      let eq=0,j=i+1;
+      while(src[j]==='='){eq++;j++;}
+      if(src[j]==='['){
+        const close=']'+'='.repeat(eq)+']';
+        const end=src.indexOf(close,j+1);
+        let content=end===-1?src.slice(j+1):src.slice(j+1,end);
+        if(content[0]==='\n'){content=content.slice(1);line++;}
+        for(let k=0;k<content.length;k++)if(content[k]==='\n')line++;
+        push('string',content);
+        i=end===-1?n:end+close.length;
+        continue;
+      }
+    }
+    if(c==='"'||c==="'"){
+      const q=c; let j=i+1,out='';
+      while(j<n&&src[j]!==q){
+        if(src[j]==='\\'){
+          const e=src[j+1]; j+=2;
+          if(e==='n')out+='\n';
+          else if(e==='t')out+='\t';
+          else if(e==='r')out+='\r';
+          else if(e==='a')out+='\x07';
+          else if(e==='b')out+='\b';
+          else if(e==='f')out+='\f';
+          else if(e==='v')out+='\v';
+          else if(e==='\\')out+='\\';
+          else if(e==='"')out+='"';
+          else if(e==="'")out+="'";
+          else if(e==='\n'){out+='\n';line++;}
+          else if(e>='0'&&e<='9'){
+            let num=e;
+            while(j<n&&/[0-9]/.test(src[j])&&num.length<3){num+=src[j];j++;}
+            out+=String.fromCharCode(parseInt(num,10)&255);
+          }
+          else if(e==='x'){
+            let hx='';
+            while(j<n&&/[0-9a-fA-F]/.test(src[j])&&hx.length<2){hx+=src[j];j++;}
+            out+=String.fromCharCode(parseInt(hx,16));
+          }
+          else if(e==='z'){ while(j<n&&/\s/.test(src[j])){if(src[j]==='\n')line++;j++;} }
+          else if(e==='u'){
+            if(src[j]==='{'){
+              const e2=src.indexOf('}',j);
+              out+=utf8cp(parseInt(src.slice(j+1,e2),16)); j=e2+1;
+            }else{ out+=utf8cp(parseInt(src.substr(j,4),16)); j+=4; }
+          }
+          else out+=e||'';
+        }else{
+          if(src[j]==='\n')line++;
+          out+=src[j]; j++;
+        }
+      }
+      if(j>=n)throw new Error('Line '+line+': unfinished string');
+      push('string',out);
+      i=j+1; continue;
+    }
+    if(/[0-9]/.test(c)||(c==='.'&&/[0-9]/.test(src[i+1]||''))){
+      let j=i;
+      if(c==='0'&&(src[i+1]==='x'||src[i+1]==='X')){
+        j=i+2;
+        while(j<n&&/[0-9a-fA-F]/.test(src[j]))j++;
+        const hexs=src.slice(i+2,j);
+        let val=0;
+        if(hexs.includes('.')){
+          const parts=hexs.split('.');
+          val=parseInt(parts[0]||'0',16)||0;
+          let sc=1/16;
+          for(const d of (parts[1]||'')){ val+=parseInt(d,16)*sc; sc/=16; }
+        }else{ val=parseInt(hexs,16)||0; }
+        push('number',val);
+        i=j; continue;
+      }
+      while(j<n&&/[0-9]/.test(src[j]))j++;
+      if(src[j]==='.'){ j++; while(j<n&&/[0-9]/.test(src[j]))j++; }
+      if(src[j]==='e'||src[j]==='E'){
+        j++;
+        if(src[j]==='+'||src[j]==='-')j++;
+        while(j<n&&/[0-9]/.test(src[j]))j++;
+      }
+      push('number',parseFloat(src.slice(i,j)));
+      i=j; continue;
+    }
+    if(/[A-Za-z_]/.test(c)){
+      let j=i;
+      while(j<n&&/[A-Za-z0-9_]/.test(src[j]))j++;
+      const wd=src.slice(i,j);
+      push(KW.has(wd)?'kw':'name',wd);
+      i=j; continue;
+    }
+    if(src.substr(i,3)==='...'){push('op','...');i+=3;continue;}
+    const t2=src.substr(i,2);
+    if(['==','~=','<=','>=','..=','+=','-=','*=','/=','%=','^=','->','::'].includes(t2)){push('op',t2);i+=2;continue;}
+    if(t2==='..'){push('op','..');i+=2;continue;}
+    push('op',c); i++;
+  }
+  push('eof','<eof>');
+  return T;
+}
+
+/* ---- Parser ---- */
+const BINPRI={'or':[1,1],'and':[2,2],'<':[3,3],'>':[3,3],'<=':[3,3],'>=':[3,3],'~=':[3,3],'==':[3,3],'..':[5,4],'+':[6,6],'-':[6,6],'*':[7,7],'/':[7,7],'%':[7,7],'^':[10,9]};
+const CMPD={'+=':'+','-=':'-','*=':'*','/=':'/','%=':'%','^=':'^','..=':'..'};
+class Parser{
+  constructor(toks, srcLines){this.t=toks;this.p=0;this.srcLines=srcLines||[];}
+  peek(k=0){return this.t[Math.min(this.p+k,this.t.length-1)];}
+  next(){return this.t[this.p++];}
+  err(m){
+    const x=this.peek();
+    const ln=x.line||1;
+    let ctx='';
+    if(this.srcLines.length){
+      const lo=Math.max(1,ln-2), hi=Math.min(this.srcLines.length,ln+1);
+      const parts=[];
+      for(let i=lo;i<=hi;i++){
+        const marker = i===ln ? '>>' : '  ';
+        parts.push(marker+' '+String(i).padStart(4)+' | '+this.srcLines[i-1]);
+      }
+      ctx='\n'+parts.join('\n');
+    }
+    throw new Error('Line '+ln+': '+m+' (near "'+x.value+'")'+ctx);
+  }
+  op(v){const x=this.peek();return x.type==='op'&&x.value===v;}
+  kw(v){const x=this.peek();return x.type==='kw'&&x.value===v;}
+  aop(v){if(this.op(v)){this.p++;return true;}return false;}
+  akw(v){if(this.kw(v)){this.p++;return true;}return false;}
+  eop(v){if(!this.aop(v))this.err("expected '"+v+"'");}
+  ekw(v){if(!this.akw(v))this.err("expected '"+v+"'");}
+  ename(){const x=this.peek();if(x.type!=='name')this.err('expected identifier');this.p++;return x.value;}
+  parse(){return {type:'Chunk',body:this.block(['eof'])};}
+  blockEnd(){const x=this.peek();return x.type==='eof'||(x.type==='kw'&&['end','else','elseif','until'].includes(x.value));}
+  block(enders){
+    const st=[];
+    while(true){
+      const x=this.peek();
+      if(x.type==='eof'||(x.type==='kw'&&enders.includes(x.value)))break;
+      if(this.aop(';'))continue;
+      const s=this.statement();
+      if(s){st.push(s);if(s.type==='Return')break;}
+    }
+    return st;
+  }
+  statement(){
+    const x=this.peek();
+    if(x.type==='kw'){
+      switch(x.value){
+        case 'local':return this.localStat();
+        case 'if':return this.ifStat();
+        case 'while':{this.p++;const c=this.expr();this.ekw('do');const b=this.block(['end']);this.ekw('end');return {type:'While',cond:c,body:b};}
+        case 'repeat':{this.p++;const b=this.block(['until']);this.ekw('until');const c=this.expr();this.aop(';');return {type:'Repeat',body:b,cond:c};}
+        case 'for':return this.forStat();
+        case 'function':return this.funcStat();
+        case 'do':{this.p++;const b=this.block(['end']);this.ekw('end');return {type:'Do',body:b};}
+        case 'return':{this.p++;const ex=[];if(!this.blockEnd()&&!this.op(';')){ex.push(this.expr());while(this.aop(','))ex.push(this.expr());}this.aop(';');return {type:'Return',exprs:ex};}
+        case 'break':{this.p++;return {type:'Break'};}
+      }
+    }
+    if(x.type==='name'&&x.value==='type'&&this.peek(1).type==='name'){this.skipLine();return null;}
+    if(x.type==='name'&&x.value==='export'&&this.peek(1).value==='type'&&this.peek(2).type==='name'){this.skipLine();return null;}
+    if(x.type==='name'&&x.value==='continue'&&this.contEnd()){this.p++;return {type:'Continue'};}
+    const e=this.suffixedExpr();
+    if(e.type==='Call'||e.type==='MethodCall'){this.aop(';');return {type:'CallStat',e};}
+    if(this.peek().type==='op'&&CMPD[this.peek().value]){
+      const o=CMPD[this.next().value];
+      const rhs=this.expr();
+      this.aop(';');
+      return {type:'Assign',targets:[e],exprs:[{type:'Binop',op:o,l:e,r:rhs}]};
+    }
+    const tg=[e];
+    while(this.aop(','))tg.push(this.suffixedExpr());
+    this.eop('=');
+    const ex=[this.expr()];
+    while(this.aop(','))ex.push(this.expr());
+    this.aop(';');
+    return {type:'Assign',targets:tg,exprs:ex};
+  }
+  contEnd(){const x=this.peek(1);return x.type==='eof'||x.type==='kw'||(x.type==='op'&&(x.value===';'||x.value===')'));}
+  skipLine(){const ln=this.peek().line;while(this.peek().type!=='eof'&&this.peek().line===ln)this.p++;}
+  skipGeneric(){this.eop('<');let d=1;while(d>0&&this.peek().type!=='eof'){const t=this.next();if(t.type==='op'){if(t.value==='<')d++;else if(t.value==='>')d--;}}}
+  skipType(){
+    this.eop(':');
+    let d=0;
+    while(true){
+      const t=this.peek();
+      if(t.type==='eof')break;
+      if(t.type==='op'){
+        if(t.value==='('||t.value==='{'||t.value==='['||t.value==='<'){d++;this.p++;continue;}
+        if(t.value===')'||t.value==='}'){if(d===0)break;d--;this.p++;continue;}
+        if(t.value===']'){if(d===0)break;d--;this.p++;continue;}
+        if(t.value==='>'){if(d===0)break;d--;this.p++;continue;}
+        if(d===0&&(t.value===','||t.value==='='))break;
+      }
+      this.p++;
+    }
+  }
+  localStat(){
+    this.ekw('local');
+    if(this.akw('function')){
+      const nm=this.ename();
+      if(this.op('<'))this.skipGeneric();
+      const fp=this.parseParams();
+      const body=this.block(['end']);
+      this.ekw('end');
+      return {type:'LocalFunc',name:nm,func:{params:fp.params,isVararg:fp.isVararg,body}};
+    }
+    const names=[this.ename()];
+    if(this.op('<'))this.skipGeneric();
+    if(this.op(':'))this.skipType();
+    while(this.aop(',')){
+      names.push(this.ename());
+      if(this.op('<'))this.skipGeneric();
+      if(this.op(':'))this.skipType();
+    }
+    let ex=[];
+    if(this.aop('=')){ ex.push(this.expr()); while(this.aop(','))ex.push(this.expr()); }
+    this.aop(';');
+    return {type:'Local',names,exprs:ex};
+  }
+  ifStat(){
+    this.ekw('if');
+    const cl=[];
+    const c=this.expr();
+    this.ekw('then');
+    cl.push({cond:c,body:this.block(['end','else','elseif'])});
+    let eb=null;
+    while(true){
+      if(this.akw('elseif')){
+        const c2=this.expr();
+        this.ekw('then');
+        cl.push({cond:c2,body:this.block(['end','else','elseif'])});
+      }else if(this.akw('else')){
+        eb=this.block(['end']);
+        this.ekw('end');
+        break;
+      }else{
+        this.ekw('end');
+        break;
+      }
+    }
+    return {type:'If',clauses:cl,elseBody:eb};
+  }
+  forStat(){
+    this.ekw('for');
+    const fn=this.ename();
+    if(this.op(':'))this.skipType();
+    if(this.aop('=')){
+      const a=this.expr();
+      this.eop(',');
+      const b=this.expr();
+      let st=null;
+      if(this.aop(','))st=this.expr();
+      this.ekw('do');
+      const body=this.block(['end']);
+      this.ekw('end');
+      return {type:'NumericFor',name:fn,start:a,stop:b,step:st,body};
+    }
+    const names=[fn];
+    while(this.aop(',')){
+      names.push(this.ename());
+      if(this.op(':'))this.skipType();
+    }
+    this.ekw('in');
+    const ex=[this.expr()];
+    while(this.aop(','))ex.push(this.expr());
+    this.ekw('do');
+    const body=this.block(['end']);
+    this.ekw('end');
+    return {type:'GenericFor',names,exprs:ex,body};
+  }
+  funcStat(){
+    this.ekw('function');
+    let tg={type:'Name',name:this.ename()};
+    let method=false;
+    while(true){
+      if(this.op('.')){
+        this.p++;
+        tg={type:'Index',obj:tg,key:{type:'String',v:this.ename()}};
+      }else if(this.op(':')){
+        this.p++;
+        tg={type:'Index',obj:tg,key:{type:'String',v:this.ename()}};
+        method=true;
+        break;
+      }else break;
+    }
+    if(this.op('<'))this.skipGeneric();
+    const fp=this.parseParams();
+    const params=fp.params;
+    if(method)params.unshift('self');
+    const body=this.block(['end']);
+    this.ekw('end');
+    return {type:'FuncStat',target:tg,params,isVararg:fp.isVararg,body};
+  }
+  parseParams(){
+    const params=[];
+    let isVararg=false;
+    this.eop('(');
+    if(!this.op(')')){
+      do{
+        if(this.op('...')){this.p++;isVararg=true;break;}
+        params.push(this.ename());
+        if(this.op(':'))this.skipType();
+        if(this.op('<'))this.skipGeneric();
+      }while(this.aop(','));
+    }
+    this.eop(')');
+    if(this.op(':'))this.skipType();
+    return {params,isVararg};
+  }
+  expr(limit=0){
+    let left;
+    const x=this.peek();
+    if((x.type==='op'&&(x.value==='-'||x.value==='#'))||this.kw('not')){
+      const o=this.next().value;
+      left={type:'Unop',op:o,e:this.expr(8)};
+    }else{
+      left=this.simple();
+    }
+    while(true){
+      const t=this.peek();
+      let o=null;
+      if(t.type==='op')o=t.value;
+      else if(t.type==='kw'&&(t.value==='and'||t.value==='or'))o=t.value;
+      if(!o||!BINPRI[o])break;
+      if(BINPRI[o][0]<=limit)break;
+      this.p++;
+      left={type:'Binop',op:o,l:left,r:this.expr(BINPRI[o][1])};
+    }
+    return left;
+  }
+  simple(){
+    const x=this.peek();
+    if(x.type==='number'){this.p++;return {type:'Number',v:x.value};}
+    if(x.type==='string'){this.p++;return {type:'String',v:x.value};}
+    if(x.type==='kw'){
+      if(x.value==='nil'){this.p++;return {type:'Nil'};}
+      if(x.value==='true'){this.p++;return {type:'True'};}
+      if(x.value==='false'){this.p++;return {type:'False'};}
+      if(x.value==='function'){this.p++;return this.funcExpr();}
+      this.err('unexpected symbol');
+    }
+    if(x.type==='op'){
+      if(x.value==='...'){this.p++;return {type:'Vararg'};}
+      if(x.value==='{')return this.tableExpr();
+      if(x.value==='('){this.p++;const e=this.expr();this.eop(')');return this.suffix({type:'Paren',e});}
+      this.err('unexpected symbol');
+    }
+    if(x.type==='name'){this.p++;return this.suffix({type:'Name',name:x.value});}
+    this.err('unexpected symbol');
+  }
+  funcExpr(){
+    if(this.op('<'))this.skipGeneric();
+    const fp=this.parseParams();
+    const body=this.block(['end']);
+    this.ekw('end');
+    return {type:'Func',params:fp.params,isVararg:fp.isVararg,body};
+  }
+  suffix(e){
+    while(true){
+      const t=this.peek();
+      if(t.type==='op'){
+        if(t.value==='.'){ this.p++; e={type:'Index',obj:e,key:{type:'String',v:this.ename()}}; }
+        else if(t.value==='['){ this.p++; const k=this.expr(); this.eop(']'); e={type:'Index',obj:e,key:k}; }
+        else if(t.value==='('||t.value==='{'){ e={type:'Call',fn:e,args:this.callArgs()}; }
+        else if(t.value===':'){ this.p++; const m=this.ename(); e={type:'MethodCall',obj:e,method:m,args:this.callArgs()}; }
+        else break;
+      }else if(t.type==='string'){
+        this.p++;
+        e={type:'Call',fn:e,args:[{type:'String',v:t.value}]};
+      }else break;
+    }
+    return e;
+  }
+  suffixedExpr(){ const nm=this.ename(); return this.suffix({type:'Name',name:nm}); }
+  callArgs(){
+    const t=this.peek();
+    if(t.type==='op'&&t.value==='('){
+      this.p++;
+      const a=[];
+      if(!this.op(')')){ a.push(this.expr()); while(this.aop(','))a.push(this.expr()); }
+      this.eop(')');
+      return a;
+    }
+    if(t.type==='op'&&t.value==='{')return [this.tableExpr()];
+    if(t.type==='string'){this.p++;return [{type:'String',v:t.value}];}
+    this.err('expected function arguments');
+  }
+  tableExpr(){
+    this.eop('{');
+    const f=[];
+    while(!this.op('}')){
+      if(this.peek().type==='eof')this.err('unfinished table');
+      if(this.op('[')){
+        this.p++;
+        const k=this.expr();
+        this.eop(']');
+        this.eop('=');
+        f.push({k,v:this.expr()});
+      }else if(this.peek().type==='name'&&this.peek(1).type==='op'&&this.peek(1).value==='='){
+        const nm=this.next().value;
+        this.p++;
+        f.push({k:{type:'String',v:nm},v:this.expr()});
+      }else{
+        f.push({k:null,v:this.expr()});
+      }
+      if(!this.aop(',')&&!this.aop(';'))break;
+    }
+    this.eop('}');
+    return {type:'Table',fields:f};
+  }
+}
+
+/* ---- Env neutralization ---- */
+function neutralizeEnvExpr(e){
+  if(!e||typeof e!=='object')return e;
+  if(e.type==='Name'&&(e.name==='getfenv'||e.name==='setfenv'))return {type:'Nil'};
+  if(e.type==='Call' || e.type==='MethodCall'){
+    if(e.type==='Call'&&e.fn&&e.fn.type==='Name'&&(e.fn.name==='getfenv'||e.fn.name==='setfenv'))return {type:'Nil'};
+    if(e.type==='Call')return {...e,fn:neutralizeEnvExpr(e.fn),args:e.args.map(neutralizeEnvExpr)};
+    return {...e,obj:neutralizeEnvExpr(e.obj),args:e.args.map(neutralizeEnvExpr)};
+  }
+  if(e.type==='Index')return {...e,obj:neutralizeEnvExpr(e.obj),key:neutralizeEnvExpr(e.key)};
+  if(e.type==='Paren')return {...e,e:neutralizeEnvExpr(e.e)};
+  if(e.type==='Unop')return {...e,e:neutralizeEnvExpr(e.e)};
+  if(e.type==='Binop')return {...e,l:neutralizeEnvExpr(e.l),r:neutralizeEnvExpr(e.r)};
+  if(e.type==='Table')return {...e,fields:e.fields.map(f=>({...f,k:f.k&&neutralizeEnvExpr(f.k),v:neutralizeEnvExpr(f.v)}))};
+  if(e.type==='Func')return {...e,body:neutralizeEnvBlock(e.body)};
+  return e;
+}
+function neutralizeEnvStat(s){
+  if(!s)return null;
+  if(s.type==='CallStat'&&s.e&&s.e.type==='Call'&&s.e.fn&&s.e.fn.type==='Name'&&(s.e.fn.name==='getfenv'||s.e.fn.name==='setfenv'))return null;
+  const out={...s};
+  if(s.type==='Local'||s.type==='Assign'||s.type==='Return')out.exprs=s.exprs.map(neutralizeEnvExpr);
+  if(s.type==='LocalFunc')out.func={...s.func,body:neutralizeEnvBlock(s.func.body)};
+  if(s.type==='FuncStat')out.body=neutralizeEnvBlock(s.body);
+  if(s.type==='CallStat')out.e=neutralizeEnvExpr(s.e);
+  if(s.type==='If')out.clauses=s.clauses.map(c=>({...c,cond:neutralizeEnvExpr(c.cond),body:neutralizeEnvBlock(c.body)})),out.elseBody=s.elseBody&&neutralizeEnvBlock(s.elseBody);
+  if(s.type==='While'||s.type==='Repeat')out.cond=neutralizeEnvExpr(s.cond),out.body=neutralizeEnvBlock(s.body);
+  if(s.type==='Do')out.body=neutralizeEnvBlock(s.body);
+  if(s.type==='NumericFor')out.start=neutralizeEnvExpr(s.start),out.stop=neutralizeEnvExpr(s.stop),out.step=s.step&&neutralizeEnvExpr(s.step),out.body=neutralizeEnvBlock(s.body);
+  if(s.type==='GenericFor')out.exprs=s.exprs.map(neutralizeEnvExpr),out.body=neutralizeEnvBlock(s.body);
+  return out;
+}
+function neutralizeEnvBlock(body){return body.map(neutralizeEnvStat).filter(Boolean);}
+
+/* ---- Compiler ---- */
+const OPS=['MOVE','LOADK','LOADBOOL','LOADNIL','GETGLOBAL','SETGLOBAL','GETUPVAL','SETUPVAL','GETTABLE','SETTABLE','GETFIELD','SETFIELD','NEWTABLE','SETI','CALL','RETURN','JMP','TEST','EQ','LT','LE','ADD','SUB','MUL','DIV','MOD','POW','CONCAT','UNM','NOT','LEN','CLOSURE','SELF','VARARG','FORPREP','FORLOOP','TFORCALL'];
+const OP={}; OPS.forEach((v,i)=>OP[v]=i);
+const NOP=OPS.length;
+
+function newProto(){return {nparam:0,isVararg:false,nstack:0,capmax:-1,consts:[],kmap:new Map(),code:[],protos:[],upvals:[]};}
+function addConst(p,v){
+  const k=(typeof v==='number'?'n':'s')+v;
+  if(p.kmap.has(k))return p.kmap.get(k);
+  const i=p.consts.length; p.consts.push(v); p.kmap.set(k,i); return i;
+}
+function newCtx(proto,parent){return {proto,parent,scope:null,loops:[]};}
+function pushScope(c){c.scope={vars:new Map(),up:c.scope};}
+function popScope(c){c.scope=c.scope.up;}
+function emit(c,op,a,b,d){c.proto.code.push([op,a||0,b||0,d||0]);return c.proto.code.length-1;}
+function alloc(c){return c.proto.nstack++;}
+function allocTo(c,reg){while(c.proto.nstack<=reg)c.proto.nstack++;return reg;}
+function patch(c,idx,target){c.proto.code[idx][2]=target-idx-1;}
+function emitJunkReturn(c,opts){
+  if(!opts.deadCode)return;
+  const cnt=1+ri(3);
+  for(let i=0;i<cnt;i++)c.proto.code.push([ri(NOP),ri(200),ri(40000)-20000,ri(200)]);
+}
+function findLocal(c,name){
+  let s=c.scope;
+  while(s){ if(s.vars.has(name))return s.vars.get(name); s=s.up; }
+  return null;
+}
+function upvalIdx(p,name,instack,idx){
+  for(let i=0;i<p.upvals.length;i++){
+    const u=p.upvals[i];
+    if(u.instack===instack&&u.name===name)return i;
+  }
+  p.upvals.push({instack,idx,name});
+  return p.upvals.length-1;
+}
+function getUpval(c,name){
+  if(!c.parent)return -1;
+  const loc=findLocal(c.parent,name);
+  if(loc!==null){
+    if(loc > c.parent.proto.capmax)c.parent.proto.capmax=loc;
+    if(c.parent.proto.nstack <= loc)c.parent.proto.nstack=loc+1;
+    return upvalIdx(c.proto,name,1,loc);
+  }
+  const pi=getUpval(c.parent,name);
+  if(pi===-1)return -1;
+  return upvalIdx(c.proto,name,0,pi);
+}
+function resolveName(c,name){
+  const l=findLocal(c,name);
+  if(l!==null)return {kind:'reg',reg:l};
+  const u=getUpval(c,name);
+  if(u>=0)return {kind:'upval',idx:u};
+  return {kind:'global'};
+}
+function compileFunction(parent,fn,opts){
+  const p=newProto();
+  p.nparam=fn.params.length;
+  p.isVararg=!!fn.isVararg;
+  p.nstack=fn.params.length;
+  if(p.nstack>250)throw new Error('function has too many parameters');
+  const c=newCtx(p,parent);
+  pushScope(c);
+  fn.params.forEach((nm,i)=>c.scope.vars.set(nm,i));
+  const ended=compileBlock(c,fn.body,opts);
+  popScope(c);
+  if(!ended){ emit(c,OP.RETURN,0,1,0); emitJunkReturn(c,opts); }
+  if(p.capmax>=0 && p.nstack<p.capmax+1)p.nstack=p.capmax+1;
+  if(p.nstack>250)throw new Error('function exceeds the safe register budget; reduce simultaneous locals or split the function');
+  return p;
+}
+const KEEP={Local:1,LocalFunc:1,NumericFor:1,GenericFor:1};
+function compileBlock(c,stats,opts){
+  pushScope(c);
+  let ended=false;
+  for(const s of stats){
+    const m=c.proto.nstack;
+    compileStat(c,s,opts);
+    if(!KEEP[s.type]){
+      let ns=m;
+      if(c.proto.capmax>=0 && ns<c.proto.capmax+1)ns=c.proto.capmax+1;
+      c.proto.nstack=ns;
+    }
+    if(s.type==='Return'){ended=true;break;}
+  }
+  popScope(c);
+  return ended;
+}
+function compInto(c,dst,e){
+  const src=compExpr(c,e);
+  if(src!==dst)emit(c,OP.MOVE,dst,src,0);
+}
+function emitLoadK(c,v){
+  const r=alloc(c);
+  emit(c,OP.LOADK,r,addConst(c.proto,v),0);
+  return r;
+}
+function compileCallMulti(c,e,fnReg,want){
+  let firstArg,args;
+  if(e.type==='MethodCall'){
+    compInto(c,fnReg,e.obj);
+    emit(c,OP.SELF,fnReg,addConst(c.proto,e.method),0);
+    firstArg=fnReg+2;
+    args=e.args;
+  }else{
+    compInto(c,fnReg,e.fn);
+    firstArg=fnReg+1;
+    args=e.args;
+  }
+  let b=(e.type==='MethodCall'?2:1)+args.length;
+  for(let j=0;j<args.length;j++){
+    const ar=allocTo(c,firstArg+j);
+    const isLast=(j===args.length-1);
+    if(isLast&&b!==0&&args[j].type==='Vararg'){
+      emit(c,OP.VARARG,ar,0,0);
+      b=0;
+    }else if(isLast&&b!==0&&(args[j].type==='Call'||args[j].type==='MethodCall')){
+      compileCallMulti(c,args[j],ar,0);
+      b=0;
+    }else{
+      compInto(c,ar,args[j]);
+    }
+  }
+  emit(c,OP.CALL,fnReg,b,want===0?0:want+1);
+}
+function compileExprList(c,exprs,regs){
+  let covered=0;
+  for(let i=0;i<exprs.length;i++){
+    const e=exprs[i];
+    const last=(i===exprs.length-1);
+    if(last&&e.type==='Vararg'&&i<regs.length){
+      emit(c,OP.VARARG,regs[i],regs.length-i+1,0);
+      return regs.length;
+    }
+    if(last&&(e.type==='Call'||e.type==='MethodCall')&&i<regs.length){
+      compileCallMulti(c,e,regs[i],regs.length-i);
+      return regs.length;
+    }
+    if(i<regs.length){ compInto(c,regs[i],e); covered=i+1; }
+    else{ const r=alloc(c); compInto(c,r,e); }
+  }
+  return covered;
+}
+function compileAssign(c,tg,valReg){
+  if(tg.type==='Name'){
+    const r=resolveName(c,tg.name);
+    if(r.kind==='reg'){ if(r.reg!==valReg)emit(c,OP.MOVE,r.reg,valReg,0); }
+    else if(r.kind==='upval'){ emit(c,OP.SETUPVAL,valReg,r.idx,0); }
+    else{ emit(c,OP.SETGLOBAL,valReg,addConst(c.proto,tg.name),0); }
+  }else if(tg.type==='Index'){
+    const tr=alloc(c); compInto(c,tr,tg.obj);
+    if(tg.key.type==='String'){ emit(c,OP.SETFIELD,tr,addConst(c.proto,tg.key.v),valReg); }
+    else{ const kr=alloc(c); compInto(c,kr,tg.key); emit(c,OP.SETTABLE,tr,kr,valReg); }
+  }else{ throw new Error('cannot assign to this expression'); }
+}
+function compExpr(c,e){
+  switch(e.type){
+    case 'Number':return emitLoadK(c,e.v);
+    case 'String':return emitLoadK(c,e.v);
+    case 'Nil':{const r=alloc(c);emit(c,OP.LOADNIL,r,0,0);return r;}
+    case 'True':{const r=alloc(c);emit(c,OP.LOADBOOL,r,1,0);return r;}
+    case 'False':{const r=alloc(c);emit(c,OP.LOADBOOL,r,0,0);return r;}
+    case 'Vararg':{const r=alloc(c);emit(c,OP.VARARG,r,2,0);return r;}
+    case 'Paren':return compExpr(c,e.e);
+    case 'Name':{
+      const r=resolveName(c,e.name);
+      if(r.kind==='reg')return r.reg;
+      const t=alloc(c);
+      if(r.kind==='upval')emit(c,OP.GETUPVAL,t,r.idx,0);
+      else emit(c,OP.GETGLOBAL,t,addConst(c.proto,e.name),0);
+      return t;
+    }
+    case 'Index':{
+      const o=alloc(c); compInto(c,o,e.obj);
+      if(e.key.type==='String'){ emit(c,OP.GETFIELD,o,addConst(c.proto,e.key.v),o); }
+      else{ const k=alloc(c); compInto(c,k,e.key); emit(c,OP.GETTABLE,o,o,k); }
+      return o;
+    }
+    case 'Call':
+    case 'MethodCall':{
+      const f=alloc(c); compileCallMulti(c,e,f,1); return f;
+    }
+    case 'Func':{
+      const p=compileFunction(c,e,{});
+      const pi=c.proto.protos.push(p)-1;
+      const r=alloc(c); emit(c,OP.CLOSURE,r,pi,0); return r;
+    }
+    case 'Table':{
+      const r=alloc(c); emit(c,OP.NEWTABLE,r,0,0);
+      let ai=1;
+      for(const f of e.fields){
+        if(f.k===null){
+          const vr=alloc(c); compInto(c,vr,f.v); emit(c,OP.SETI,r,ai,vr); ai++;
+        }else if(f.k.type==='String'){
+          const vr=alloc(c); compInto(c,vr,f.v); emit(c,OP.SETFIELD,r,addConst(c.proto,f.k.v),vr);
+        }else{
+          const kr=alloc(c); compInto(c,kr,f.k);
+          const vr=alloc(c); compInto(c,vr,f.v);
+          emit(c,OP.SETTABLE,r,kr,vr);
+        }
+      }
+      return r;
+    }
+    case 'Unop':{
+      const r=alloc(c); compInto(c,r,e.e);
+      if(e.op==='not')emit(c,OP.NOT,r,r,0);
+      else if(e.op==='-')emit(c,OP.UNM,r,r,0);
+      else emit(c,OP.LEN,r,r,0);
+      return r;
+    }
+    case 'Binop':{
+      const op=e.op;
+      if(op==='and'||op==='or'){
+        const l=compExpr(c,e.l);
+        const dst=alloc(c); emit(c,OP.MOVE,dst,l,0);
+        emit(c,OP.TEST,dst,0,op==='and'?1:0);
+        const je=emit(c,OP.JMP,0,0,0);
+        compInto(c,dst,e.r);
+        patch(c,je,c.proto.code.length);
+        return dst;
+      }
+      if(['==','~=','<','<=','>','>='].includes(op)){
+        const l=alloc(c); compInto(c,l,e.l);
+        const r=alloc(c); compInto(c,r,e.r);
+        const dst=alloc(c);
+        let cop,ca,cb;
+        if(op==='=='||op==='~='){cop=OP.EQ;ca=l;cb=r;}
+        else if(op==='<'){cop=OP.LT;ca=l;cb=r;}
+        else if(op==='<='){cop=OP.LE;ca=l;cb=r;}
+        else if(op==='>'){cop=OP.LT;ca=r;cb=l;}
+        else{cop=OP.LE;ca=r;cb=l;}
+        const cc=(op==='=='||op==='<'||op==='<=')?1:0;
+        emit(c,cop,ca,cb,cc);
+        const j1=emit(c,OP.JMP,0,0,0);
+        emit(c,OP.LOADBOOL,dst,0,1);
+        emit(c,OP.LOADBOOL,dst,1,0);
+        patch(c,j1,j1+2);
+        return dst;
+      }
+      const amap={'+':OP.ADD,'-':OP.SUB,'*':OP.MUL,'/':OP.DIV,'%':OP.MOD,'^':OP.POW};
+      if(amap[op]){
+        const l=alloc(c); compInto(c,l,e.l);
+        const r=alloc(c); compInto(c,r,e.r);
+        emit(c,amap[op],l,l,r);
+        return l;
+      }
+      if(op==='..'){
+        const l=alloc(c),r=alloc(c);
+        compInto(c,l,e.l); compInto(c,r,e.r);
+        emit(c,OP.CONCAT,l,l,r);
+        return l;
+      }
+      throw new Error('unsupported operator '+op);
+    }
+  }
+  throw new Error('unsupported expression '+e.type);
+}
+function compileStat(c,s,opts){
+  switch(s.type){
+    case 'Local':{
+      const regs=s.names.map(()=>alloc(c));
+      const cov=compileExprList(c,s.exprs,regs);
+      for(let i=cov;i<s.names.length;i++)emit(c,OP.LOADNIL,regs[i],0,0);
+      s.names.forEach((nm,i)=>c.scope.vars.set(nm,regs[i]));
+      break;
+    }
+    case 'LocalFunc':{
+      const reg=alloc(c); c.scope.vars.set(s.name,reg);
+      const p=compileFunction(c,s.func,opts);
+      const pi=c.proto.protos.push(p)-1;
+      emit(c,OP.CLOSURE,reg,pi,0);
+      break;
+    }
+    case 'FuncStat':{
+      const p=compileFunction(c,{params:s.params,isVararg:s.isVararg,body:s.body},opts);
+      const pi=c.proto.protos.push(p)-1;
+      const tmp=alloc(c); emit(c,OP.CLOSURE,tmp,pi,0);
+      compileAssign(c,s.target,tmp);
+      break;
+    }
+    case 'Assign':{
+      const vals=[];
+      for(let i=0;i<s.exprs.length;i++){
+        const e=s.exprs[i];
+        const last=(i===s.exprs.length-1);
+        if(last&&(e.type==='Call'||e.type==='MethodCall')){
+          const want=Math.max(1,s.targets.length-(s.exprs.length-1));
+          const r0=alloc(c);
+          compileCallMulti(c,e,r0,want);
+          for(let j=0;j<want;j++)vals.push(r0+j);
+        }else if(last&&e.type==='Vararg'){
+          const want=Math.max(1,s.targets.length-(s.exprs.length-1));
+          const r0=alloc(c);
+          emit(c,OP.VARARG,r0,want+1,0);
+          for(let j=0;j<want;j++)vals.push(r0+j);
+        }else{
+          const r=alloc(c); compInto(c,r,e); vals.push(r);
+        }
+      }
+      let nilReg=null;
+      s.targets.forEach((tg,i)=>{
+        let vr=vals[i];
+        if(vr===undefined){
+          if(nilReg===null){ nilReg=alloc(c); emit(c,OP.LOADNIL,nilReg,0,0); }
+          vr=nilReg;
+        }
+        compileAssign(c,tg,vr);
+      });
+      break;
+    }
+    case 'CallStat':compExpr(c,s.e);break;
+    case 'Do':compileBlock(c,s.body,opts);break;
+    case 'If':{
+      const ends=[];
+      for(const cl of s.clauses){
+        const cr=compExpr(c,cl.cond);
+        emit(c,OP.TEST,cr,0,1);
+        const je=emit(c,OP.JMP,0,0,0);
+        compileBlock(c,cl.body,opts);
+        ends.push(emit(c,OP.JMP,0,0,0));
+        patch(c,je,c.proto.code.length);
+      }
+      if(s.elseBody)compileBlock(c,s.elseBody,opts);
+      const end=c.proto.code.length;
+      ends.forEach(j=>patch(c,j,end));
+      break;
+    }
+    case 'While':{
+      const start=c.proto.code.length;
+      const cr=compExpr(c,s.cond);
+      emit(c,OP.TEST,cr,0,1);
+      const je=emit(c,OP.JMP,0,0,0);
+      const loop={breaks:[],conts:[]};
+      c.loops.push(loop);
+      compileBlock(c,s.body,opts);
+      c.loops.pop();
+      const jb=emit(c,OP.JMP,0,0,0);
+      patch(c,jb,start);
+      const end=c.proto.code.length;
+      patch(c,je,end);
+      loop.breaks.forEach(b=>patch(c,b,end));
+      loop.conts.forEach(x=>patch(c,x,start));
+      break;
+    }
+    case 'Repeat':{
+      const start=c.proto.code.length;
+      const loop={breaks:[],conts:[]};
+      c.loops.push(loop);
+      compileBlock(c,s.body,opts);
+      const condPos=c.proto.code.length;
+      const cr=compExpr(c,s.cond);
+      emit(c,OP.TEST,cr,0,1);
+      const jb=emit(c,OP.JMP,0,0,0);
+      patch(c,jb,start);
+      c.loops.pop();
+      const end=c.proto.code.length;
+      loop.breaks.forEach(b=>patch(c,b,end));
+      loop.conts.forEach(x=>patch(c,x,condPos));
+      break;
+    }
+    case 'NumericFor':{
+      const base=alloc(c); compInto(c,base,s.start);
+      const lim=alloc(c); compInto(c,lim,s.stop);
+      const stp=alloc(c);
+      if(s.step)compInto(c,stp,s.step);
+      else emit(c,OP.LOADK,stp,addConst(c.proto,1),0);
+      alloc(c);
+      const prep=emit(c,OP.FORPREP,base,0,0);
+      const bodyStart=c.proto.code.length;
+      pushScope(c);
+      c.scope.vars.set(s.name,base+3);
+      const loop={breaks:[],conts:[]};
+      c.loops.push(loop);
+      compileBlock(c,s.body,opts);
+      c.loops.pop();
+      popScope(c);
+      const fl=emit(c,OP.FORLOOP,base,0,0);
+      const end=c.proto.code.length;
+      patch(c,prep,end);
+      patch(c,fl,bodyStart);
+      loop.breaks.forEach(b=>patch(c,b,end));
+      loop.conts.forEach(x=>patch(c,x,fl));
+      break;
+    }
+    case 'GenericFor':{
+      const base=alloc(c); alloc(c); alloc(c);
+      compileExprList(c,s.exprs,[base,base+1,base+2]);
+      for(let i=0;i<s.names.length;i++)alloc(c);
+      pushScope(c);
+      s.names.forEach((nm,i)=>c.scope.vars.set(nm,base+3+i));
+      const tc=emit(c,OP.TFORCALL,base,s.names.length,0);
+      const je=emit(c,OP.JMP,0,0,0);
+      const loop={breaks:[],conts:[]};
+      c.loops.push(loop);
+      compileBlock(c,s.body,opts);
+      c.loops.pop();
+      popScope(c);
+      const jb=emit(c,OP.JMP,0,0,0);
+      patch(c,jb,tc);
+      const end=c.proto.code.length;
+      patch(c,je,end);
+      loop.breaks.forEach(b=>patch(c,b,end));
+      loop.conts.forEach(x=>patch(c,x,tc));
+      break;
+    }
+    case 'Return':{
+      if(s.exprs.length===1&&(s.exprs[0].type==='Call'||s.exprs[0].type==='MethodCall')){
+        const r=alloc(c); compileCallMulti(c,s.exprs[0],r,0); emit(c,OP.RETURN,r,0,0);
+      }else if(s.exprs.length===1&&s.exprs[0].type==='Vararg'){
+        const r=alloc(c); emit(c,OP.VARARG,r,0,0); emit(c,OP.RETURN,r,0,0);
+      }else{
+        const regs=s.exprs.map(()=>alloc(c));
+        compileExprList(c,s.exprs,regs);
+        emit(c,OP.RETURN,regs.length?regs[0]:0,regs.length+1,0);
+      }
+      emitJunkReturn(c,opts);
+      break;
+    }
+    case 'Break':{
+      const loop=c.loops[c.loops.length-1];
+      if(!loop)throw new Error('break outside of a loop');
+      loop.breaks.push(emit(c,OP.JMP,0,0,0));
+      break;
+    }
+    case 'Continue':{
+      const loop=c.loops[c.loops.length-1];
+      if(!loop)throw new Error('continue outside of a loop');
+      loop.conts.push(emit(c,OP.JMP,0,0,0));
+      break;
+    }
+    default:throw new Error('unsupported statement '+s.type);
+  }
+}
+function compile(ast,opts){
+  const main=newProto();
+  main.isVararg=true;
+  const c=newCtx(main,null);
+  const ended=compileBlock(c,ast.body,opts);
+  if(!ended)emit(c,OP.RETURN,0,1,0);
+  emitJunkReturn(c,opts);
+  if(main.capmax>=0 && main.nstack<main.capmax+1)main.nstack=main.capmax+1;
+  return main;
+}
+
+/* ---- BG serializeProto: per-proto codec, 5-byte instructions ---- */
+function serializeProto(p, out, opmap, stats, prng_next, keys, chunkCounter){
+  if(p.nstack > 255) throw new Error('function exceeds the 255-register VM limit; split the function');
+  if(p.consts.length > 32760) throw new Error('too many constants');
+
+  const chunkIdx = chunkCounter.n++;
+  const vmFamily = chunkIdx % 3;
+  const codec = bgDeriveCodec(chunkIdx, vmFamily);
+
+  // 11-byte codec header
+  out.push(codec.add, codec.invMul, codec.xor, codec.rot, codec.vmFamily);
+  out.push(codec.byteAdd[1], codec.byteAdd[2], codec.byteAdd[3]);
+  out.push(codec.byteXor[1], codec.byteXor[2], codec.byteXor[3]);
+
+  // 4-byte proto header
+  out.push(p.isVararg?1:0, p.nparam&255, p.nstack&255, p.upvals.length&255);
+  for(const u of p.upvals){ out.push(u.instack?1:0); w16(out,u.idx); }
+
+  // Constants
+  w16(out, p.consts.length);
+  for(const cv of p.consts){
+    stats.consts++;
+    const isNum = typeof cv === 'number';
+    if(isNum){
+      const nk = cv >>> 0;
+      const pk = prng_next();
+      const qk = (nk - pk) >>> 0;
+      out.push(2);
+      w32(out, pk); w32(out, qk);
+    } else {
+      out.push(1);
+      const raw = xorBytes(toUTF8(String(cv)), keys.strKey);
+      const enc = raw.map((b, i) => bgEncByte((i % 3) + 1, b, codec));
+      w16(out, enc.length);
+      for(const x of enc) out.push(x);
+    }
+  }
+
+  // Children
+  w16(out, p.protos.length);
+  for(const sp of p.protos){
+    serializeProto(sp, out, opmap, stats, prng_next, keys, chunkCounter);
+  }
+
+  // Code — 5 bytes per instruction: op, a, b_hi, b_lo, c
+  w32(out, p.code.length);
+  stats.instrs += p.code.length;
+  for(const ins of p.code){
+    const p1 = prng_next();
+    const p2 = prng_next();
+    const logical = (opmap[ins[0]] ^ (p1 & 255)) & 255;
+    const aRaw = (ins[1] ^ (p1 >>> 8)) & 255;
+    const bRaw = ((ins[2] & 0xFFFF) ^ (p2 & 0xFFFF)) & 0xFFFF;
+    const cRaw = (ins[3] ^ ((p2 >>> 16) & 255)) & 255;
+    out.push(bgEncOpcode(logical, codec));
+    out.push(bgEncByte(1, aRaw, codec));
+    out.push(bgEncByte(2, (bRaw >>> 8) & 255, codec));
+    out.push(bgEncByte(3, bRaw & 255, codec));
+    out.push(bgEncByte(1, cRaw, codec));
+  }
+  stats.protos++;
+}
+
+/* ---- Structural verifier (bounds-checked, big-endian, 5-byte insns) ---- */
+function bgVerifyPayload(bytes, blobKey) {
+  const n = bytes.length;
+  if (n < 16) throw new Error('payload shorter than 16 bytes');
+
+  let a = 0, b = 0;
+  for (let i = 0; i < n - 4; i++) {
+    a = (a + bytes[i]) % 65521;
+    b = (b + a) % 65521;
+  }
+  const expected = (((b * 65536) + a) >>> 0);
+  const stored = ((bytes[n-4] << 24) | (bytes[n-3] << 16) | (bytes[n-2] << 8) | bytes[n-1]) >>> 0;
+  if (stored !== expected) throw new Error('payload Adler mismatch');
+
+  const protoEnd = n - 8;
+  let fnv = 2166136261;
+  for (let i = 0; i < protoEnd; i++) {
+    fnv = ((((fnv ^ bytes[i]) >>> 0) * 33 + blobKey[i % blobKey.length]) >>> 0);
+  }
+  const fnvStored = ((bytes[protoEnd] << 24) | (bytes[protoEnd+1] << 16) |
+                     (bytes[protoEnd+2] << 8) | bytes[protoEnd+3]) >>> 0;
+  if (fnv !== fnvStored) throw new Error('payload FNV mismatch');
+
+  const stats = { protos: 0, instrs: 0, consts: 0, codecFamilies: {0:0,1:0,2:0}, unknownOps: 0 };
+  const knownOps = new Set(OPS.map((_, i) => i));
+  const u16be = p => ((bytes[p] << 8) | bytes[p+1]);
+  const u32be = p => (((bytes[p] << 24) | (bytes[p+1] << 16) | (bytes[p+2] << 8) | bytes[p+3]) >>> 0);
+
+  function walk(pos) {
+    if (pos + 11 > protoEnd) throw new Error('proto header truncated at ' + pos);
+    const cAdd = bytes[pos++], cIM  = bytes[pos++], cXor = bytes[pos++],
+          cRot = bytes[pos++], cFam = bytes[pos++];
+    const cBA  = [0, bytes[pos++], bytes[pos++], bytes[pos++]];
+    const cBX  = [0, bytes[pos++], bytes[pos++], bytes[pos++]];
+    if (cFam > 2) throw new Error('bad vmFamily ' + cFam);
+    if (cRot < 1 || cRot > 7) throw new Error('bad rot ' + cRot);
+    let inv = 1;
+    for (let x = 1; x < 256; x += 2) if (((cIM * x) & 255) === 1) { inv = x; break; }
+    const codec = { vmFamily: cFam, add: cAdd, invMul: cIM, xor: cXor, rot: cRot, inv, byteAdd: cBA, byteXor: cBX };
+    stats.codecFamilies[cFam]++;
+
+    if (pos + 4 > protoEnd) throw new Error('proto body truncated');
+    const isVararg = bytes[pos++], nparam = bytes[pos++], nstack = bytes[pos++], nups = bytes[pos++];
+    if (nparam > nstack) throw new Error('nparam > nstack');
+    if (nstack > 250) throw new Error('nstack too large');
+    if (pos + nups * 3 > protoEnd) throw new Error('upvals overflow');
+    pos += nups * 3;
+
+    if (pos + 2 > protoEnd) throw new Error('const count truncated');
+    const nk = u16be(pos); pos += 2;
+    for (let i = 0; i < nk; i++) {
+      if (pos + 1 > protoEnd) throw new Error('const tag overflow');
+      const tag = bytes[pos++];
+      if (tag === 2) {
+        if (pos + 8 > protoEnd) throw new Error('MBA const overflow');
+        pos += 8; stats.consts++;
+      } else if (tag === 1) {
+        if (pos + 2 > protoEnd) throw new Error('string len overflow');
+        const len = u16be(pos); pos += 2;
+        if (pos + len > protoEnd) throw new Error('string data overflow');
+        pos += len; stats.consts++;
+      } else throw new Error('bad constant tag ' + tag);
+    }
+
+    if (pos + 2 > protoEnd) throw new Error('child count truncated');
+    const np = u16be(pos); pos += 2;
+    for (let i = 0; i < np; i++) pos = walk(pos);
+
+    if (pos + 4 > protoEnd) throw new Error('code count truncated');
+    const nc = u32be(pos); pos += 4;
+    if (nc > 500000) throw new Error('bad instruction count ' + nc);
+    if (pos + nc * 5 > protoEnd) throw new Error('code overflow');
+    stats.instrs += nc;
+    for (let i = 0; i < Math.min(nc, 4); i++) {
+      const phys = bytes[pos + i * 5];
+      const op = bgDecOpcode(phys, codec);
+      if (!knownOps.has(op)) stats.unknownOps++;
+    }
+    pos += nc * 5;
+    stats.protos++;
+    return pos;
+  }
+
+  const final = walk(4);
+  if (final !== protoEnd) throw new Error('parse ended at ' + final + ', expected ' + protoEnd);
+  return stats;
+}
+
+/* ---- VM generator ---- */
+const V2_B85='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;<=>?@^_`{|}~';
+function base85Encode(s){
+  let out=String(s.length)+':';
+  for(let i=0;i<s.length;i+=4){
+    const n=Math.min(4,s.length-i); let v=0;
+    for(let j=0;j<4;j++)v=v*256+(j<n?s.charCodeAt(i+j):0);
+    let q=''; for(let j=0;j<5;j++){q=V2_B85[v%85]+q;v=Math.floor(v/85)}
+    out+=q;
+  }
+  return out;
+}
+function genVM(o){
+  const flags=o.flags;
+  const one=!!flags.oneLine;
+  const v2=!!flags.v2;
+  const transport=s=>v2?base85Encode(s):s;
+  const cfMask=flags.controlFlow?(secureU32()&0x7fffffff):0;
+  const lazyTag=flags.stealth?('_'+secureU32().toString(36).slice(0,8)): '__hafiyobf_enc';
+  const names={};
+  const G=k=>{if(!names[k])names[k]=genName();return names[k];};
+  const errorPrefix=flags.stealth?('E'+secureU32().toString(36).slice(0,6).toUpperCase()):'HAFIYOBF';
+  const rerr=()=>errorPrefix+":0x"+Math.floor(secureU32()/256).toString(16).padStart(6,'0').toUpperCase();
+  const S=s=>flags.strEnc?`${G('dstr')}("${escLuaBytes(xorBytes(toUTF8(s),o.strKey))}")`:`"${escLuaStr(s)}"`;
+  const L=[];
+  const w=x=>L.push(x);
+
+  if(flags.banner){
+    const wm=G('wm'),wb=G('wb');
+    w(`local ${wm}="runtime package"`);
+    w(`local ${wb}="${o.buildId||'HB-0000000000'}"`);
+  }
+  if(flags.decoy){
+    const decoys=2+ri(3);
+    for(let i=0;i<decoys;i++){
+      const df=G('decoy'+i),msg=errorPrefix+':0x'+Math.floor(secureU32()/256).toString(16).padStart(6,'0').toUpperCase();
+      const mode=i%4;
+      if(mode===0){
+        w(`do local function ${df}(x) if x==${1+ri(99999)} then error("${msg}",0) end return x end end`);
+      }else if(mode===1){
+        w(`do local ${df}=function(a,b) return (a or 0)+(b or 0) end end`);
+      }else if(mode===2){
+        w(`do local function ${df}() return ${df} end end`);
+      }else{
+        const t=G('dt'+i);
+        w(`do local ${t}={${1+ri(99)},${1+ri(99)}} local function ${df}(k) return ${t}[k] end end`);
+      }
+    }
+  }
+  if(flags.antiHook){
+    const guards=2+ri(3);
+    for(let i=0;i<guards;i++){
+      const gf=G('hookguard'+i),a=G('snapA'+i),b=G('snapB'+i),c=G('snapC'+i),msg=errorPrefix+':0x'+Math.floor(secureU32()/256).toString(16).padStart(6,'0').toUpperCase();
+      const check=i%3===0?`if not rawequal(type,${a}) then error("${msg}",0) end`:i%3===1?`if not rawequal(pcall,${b}) then error("${msg}",0) end`:`if not rawequal(error,${c}) then error("${msg}",0) end`;
+      w(`do local ${a}=type local ${b}=pcall local ${c}=error local function ${gf}() ${check} return true end end`);
+    }
+  }
+  if(flags.deadCode){
+    const blocks=4+ri(5);
+    for(let i=0;i<blocks;i++){
+      let q='';
+      for(let j=0;j<12+ri(20);j++)q+='abcdefghijklmnopqrstuvwxyz0123456789'[ri(36)];
+      const dn=G('deadN'+i),ds=G('deadS'+i),dt=G('deadT'+i),df=G('deadF'+i),guard=G('dg'+i);
+      const gv=1+ri(0x7fffffff);
+      const style=i%3;
+      if(style===0){
+        w(`do local ${guard}=${gv} if ${guard} == ${gv+1} then local ${dn}=${1+ri(0x7fffffff)} local ${ds}="${escLuaStr(q)}" local ${dt}={${dn},${ds}} end end`);
+      }else if(style===1){
+        w(`do local ${guard}=${gv} if ${guard} > ${gv} then local function ${df}(a) return a*${1+ri(9)}+${ri(50)} end local ${dn}=${df}(${ri(100)}) end end`);
+      }else{
+        w(`do local ${guard}=${gv} if ${guard} < ${gv} then local ${dt}={n=${ri(20)},s="${escLuaStr(q.slice(0,8))}"} for ${dn}=1,${dt}.n do ${dt}[${dn}]=${dn}*${dn} end end end`);
+      }
+    }
+  }
+  if(flags.tamperDecoys){
+    const checks=3+ri(4);
+    for(let i=0;i<checks;i++){
+      const fn=G('verify'+i),aa=G('byteA'+i),bb=G('byteB'+i),cc=G('checkC'+i),msg=rerr();
+      w(`do local ${aa}=${1+ri(255)} local ${bb}=${1+ri(255)} local ${cc}=${1+ri(65535)} local function ${fn}(x) local z=(x or ${aa})%256 if z==${bb} and (${cc}%2)==1 then error("${msg}",0) end return z end end`);
+    }
+  }
+  if(flags.junk){
+    const requestedJunk=Number(flags.junkMaxBytes);
+    const maxJunk=Math.min(32*1024,Math.max(0,Number.isFinite(requestedJunk)?requestedJunk:16*1024));
+    let junkBytes=0, junkLines=0;
+    const safeStr=()=>{
+      let s=''; const n=8+ri(24);
+      for(let j=0;j<n;j++)s+='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'[ri(63)];
+      return s;
+    };
+    while(junkBytes<maxJunk){
+      let line;
+      const kind=junkLines%7;
+      const n1=genName(), n2=genName(), n3=genName();
+      if(kind===0) line=`local ${n1}=${1+ri(0x3fffffff)}`;
+      else if(kind===1) line=`local ${n1}="${safeStr()}"`;
+      else if(kind===2) line=`local ${n1}={${ri(50)},${ri(50)},${ri(50)}}`;
+      else if(kind===3) line=`local ${n1}=(${1+ri(100)}*${1+ri(20)}+${ri(50)})%${100+ri(900)}`;
+      else if(kind===4) line=`local function ${n1}(${n2}) return (${n2} or 0)+${ri(10)} end`;
+      else if(kind===5) line=`do local ${n1}=${ri(999)} local ${n2}="${safeStr().slice(0,12)}" local ${n3}=#${n2}+${n1} end`;
+      else line=`local ${n1}=${ri(2)===0?'true':'nil'} local ${n2}=${ri(200)}`;
+      const cost=line.length+1;
+      if(junkBytes+cost>maxJunk)break;
+      w(line);
+      junkBytes+=cost;
+      junkLines++;
+    }
+    o.junkBytes=junkBytes;
+  }else o.junkBytes=0;
+
+  const sA=G('str'),tA=G('tab'),mA=G('math');
+  w(`local ${sA}, ${tA}, ${mA} = string, table, math`);
+  const rg=G('rawget'),rs=G('rawset'),gm=G('getmt0'),sm=G('setmt');
+  w(`local ${rg}, ${rs}, ${gm}, ${sm} = rawget, rawset, getmetatable, setmetatable`);
+  const tn=G('tonum'),ty=G('typ'),er=G('err');
+  w(`local ${tn}, ${ty}, ${er} = tonumber, type, error`);
+  const sel=G('select'),un=G('unpack'),pcf=G('pcall');
+  w(`local ${sel}, ${un}, ${pcf} = select, unpack or table.unpack, pcall`);
+  const pk=G('pack');
+  w(`local function ${pk}(...) return ${sel}('#', ...), {...} end`);
+
+  const bx=G('bx');
+  w(`local ${bx} = bit32 and bit32.bxor or function(a, b)`);
+  w(`  local r, bt = 0, 1`);
+  w(`  for i = 1, 8 do local x, y = a % 2, b % 2 if x ~= y then r = r + bt end a = (a - x) / 2 b = (b - y) / 2 bt = bt + bt end`);
+  w(`  return r`);
+  w(`end`);
+  const bnd=G('bnd');
+  w(`local ${bnd} = bit32 and bit32.band or function(a, b)`);
+  w(`  local r, bt = 0, 1`);
+  w(`  for i = 1, 32 do local x, y = a % 2, b % 2 if x == 1 and y == 1 then r = r + bt end a = (a - x) / 2 b = (b - y) / 2 bt = bt + bt end`);
+  w(`  return r`);
+  w(`end`);
+  const lsh=G('lsh');
+  w(`local ${lsh} = bit32 and bit32.lshift or function(a, b) return (a * (2 ^ b)) % 4294967296 end`);
+  const rsh=G('rsh');
+  w(`local ${rsh} = bit32 and bit32.rshift or function(a, b) return math.floor(a / (2 ^ b)) end`);
+
+  const prngN=G('prng'),pstate=G('pstate');
+  w(`local ${pstate} = ${o.prngSeed}`);
+  w(`local function ${prngN}()`);
+  w(`  ${pstate} = ${bx}(${pstate}, ${lsh}(${pstate}, 13))`);
+  w(`  ${pstate} = ${bx}(${pstate}, ${rsh}(${pstate}, 17))`);
+  w(`  ${pstate} = ${bx}(${pstate}, ${lsh}(${pstate}, 5))`);
+  w(`  return ${pstate}`);
+  w(`end`);
+  const cprng=prngN+'()';
+
+  if(flags.strEnc){
+    const d=G('dstr'),arg=G('sarg'),out=G('sout'),ii=G('sii');
+    const keyStr=escLuaBytes(o.strKey);
+    w(`local function ${d}(${arg})`);
+    w(`  local ${out} = {}`);
+    w(`  for ${ii} = 1, #${arg} do`);
+    w(`    ${out}[${ii}] = ${sA}.char(${bx}(${sA}.byte(${arg}, ${ii}), ${sA}.byte("${keyStr}", (${ii} - 1) % ${o.strKey.length} + 1)))`);
+    w(`  end`);
+    w(`  return ${tA}.concat(${out})`);
+    w(`end`);
+  }
+
+  const alpha=G('alpha'),b64t=G('b64t'),b64d=G('b64d');
+  w(`local ${alpha} = "${o.alphabet}"`);
+  w(`local ${b64t} = {}`);
+  w(`for i = 1, #${alpha} do ${b64t}[${sA}.byte(${alpha}, i)] = i - 1 end`);
+  const bi=G('barg');
+  w(`local function ${b64d}(${bi})`);
+  w(`  local temp = {}`);
+  w(`  for i = 1, #${bi} do local bv = ${b64t}[${sA}.byte(${bi}, i)] if bv then temp[#temp + 1] = bv end end`);
+  w(`  local nbytes = math.floor((#temp * 6) / 8)`);
+  w(`  if buffer and buffer.create then`);
+  w(`    local buf = buffer.create(nbytes)`);
+  w(`    local bacc, bbits, bidx = 0, 0, 0`);
+  w(`    for i = 1, #temp do`);
+  w(`      bacc = bacc * 64 + temp[i]`);
+  w(`      bbits = bbits + 6`);
+  w(`      if bbits >= 8 then bbits = bbits - 8 buffer.writeu8(buf, bidx, math.floor(bacc / (2 ^ bbits)) % 256) bidx = bidx + 1 bacc = bacc % (2 ^ bbits) end`);
+  w(`    end`);
+  w(`    return buf, true`);
+  w(`  else`);
+  w(`    local chars = {}`);
+  w(`    local bacc, bbits = 0, 0`);
+  w(`    for i = 1, #temp do`);
+  w(`      bacc = bacc * 64 + temp[i]`);
+  w(`      bbits = bbits + 6`);
+  w(`      if bbits >= 8 then bbits = bbits - 8 chars[#chars + 1] = ${sA}.char(math.floor(bacc / (2 ^ bbits)) % 256) bacc = bacc % (2 ^ bbits) end`);
+  w(`    end`);
+  w(`    return ${tA}.concat(chars), false`);
+  w(`  end`);
+  w(`end`);
+
+  let p85d='';
+  if(v2){
+    p85d=G('b85d');
+    const p85a=G('b85a'),p85s=G('b85s'),p85o=G('b85o'),p85n=G('b85n');
+    w(`local ${p85a}="${V2_B85}"`);
+    w(`local function ${p85d}(${p85s}) local ${p85o}={} local ${p85n}=0 for i=1,#${p85s} do if ${sA}.sub(${p85s},i,i)==":" then ${p85n}=${tn}(${sA}.sub(${p85s},1,i-1)); ${p85s}=${sA}.sub(${p85s},i+1); break end end local out={} for i=1,#${p85s},5 do local v=0 for j=0,4 do local c=${sA}.byte(${p85s},i+j) if not c then c=string.byte(${p85a},1) end local z=${sA}.find(${p85a},${sA}.sub(${p85s},i+j,i+j),1,true) or 1 v=v*85+z-1 end for j=3,0,-1 do out[#out+1]=${sA}.char(${mA}.floor(v/(256^j))%256) end end return ${tA}.concat(out):sub(1,${p85n}) end`);
+  }
+
+  const ux=G('unxor'),uarg=G('uarg');
+  w(`local function ${ux}(${uarg}, is_buf)`);
+  w(`  local len = is_buf and buffer.len(${uarg}) or #${uarg}`);
+  w(`  if is_buf then`);
+  w(`    local buf = buffer.create(len)`);
+  w(`    for i = 0, len - 1 do`);
+  w(`      local b = buffer.readu8(${uarg}, i)`);
+  w(`      local k = ${sA}.byte("${escLuaBytes(o.blobKey)}", (i % ${o.blobKey.length}) + 1)`);
+  w(`      buffer.writeu8(buf, i, ${bx}(b, k))`);
+  w(`    end`);
+  w(`    return buf, true`);
+  w(`  else`);
+  w(`    local chars = {}`);
+  w(`    for i = 1, len do`);
+  w(`      local b = ${sA}.byte(${uarg}, i)`);
+  w(`      local k = ${sA}.byte("${escLuaBytes(o.blobKey)}", ((i - 1) % ${o.blobKey.length}) + 1)`);
+  w(`      chars[i] = ${sA}.char(${bx}(b, k))`);
+  w(`    end`);
+  w(`    return ${tA}.concat(chars), false`);
+  w(`  end`);
+  w(`end`);
+
+  const desf=G('des'),dd=G('dd'),pos=G('pos');
+  const LR8=G('r8'),LR16=G('r16'),LR32=G('r32'),LRS=G('rstr'),LRP=G('rp');
+  const c8=LR8+'()', c16=LR16+'()', c32=LR32+'()', cproto=LRP+'()';
+  const blobKeyStr=escLuaBytes(o.blobKey);
+  const blobKeyLen=o.blobKey.length;
+
+  w(`local function ${desf}(${dd}, is_buf)`);
+  w(`  local len = is_buf and buffer.len(${dd}) or #${dd}`);
+  w(`  if len < 12 then ${er}("${rerr()}", 0) end`);
+  w(`  local get_byte = is_buf and function(i) return buffer.readu8(${dd}, i) end or function(i) return ${sA}.byte(${dd}, i + 1) end`);
+  w(`  local s1, s2 = 0, 0`);
+  w(`  for i = 0, len - 5 do`);
+  w(`    s1 = (s1 + get_byte(i)) % 65521`);
+  w(`    s2 = (s2 + s1) % 65521`);
+  w(`  end`);
+  w(`  local chk = s2 * 65536 + s1`);
+  w(`  local e1 = get_byte(len - 4)`);
+  w(`  local e2 = get_byte(len - 3)`);
+  w(`  local e3 = get_byte(len - 2)`);
+  w(`  local e4 = get_byte(len - 1)`);
+  w(`  if chk ~= e1 * 16777216 + e2 * 65536 + e3 * 256 + e4 then ${er}("${rerr()}", 0) end`);
+  w(`  local ${pos} = 0`);
+  w(`  local function ${LR8}() local v = get_byte(${pos}); ${pos} = ${pos} + 1; return v end`);
+  w(`  local function ${LR16}() local a, b = ${c8}, ${c8}; return a * 256 + b end`);
+  w(`  local function ${LR32}() local a, b, c, d = ${c8}, ${c8}, ${c8}, ${c8}; return a * 16777216 + b * 65536 + c * 256 + d end`);
+  w(`  if ${c8} ~= 72 or ${c8} ~= 65 or ${c8} ~= 70 or ${c8} ~= 49 then ${er}("${rerr()}", 0) end`);
+
+  const decOp=G('decOp'),decB=G('decB');
+  w(`  local function ${decOp}(phys, c)`);
+  w(`    if c.fam == 0 then`);
+  w(`      local v = (phys - c.add) % 256`);
+  w(`      if v < 0 then v = v + 256 end`);
+  w(`      return (v * c.inv) % 256`);
+  w(`    elseif c.fam == 1 then`);
+  w(`      local v = (phys - c.add) % 256`);
+  w(`      if v < 0 then v = v + 256 end`);
+  w(`      return ${bx}(v, c.xor)`);
+  w(`    else`);
+  w(`      local t = ${bx}(phys, c.xor)`);
+  w(`      local lo = t % (2 ^ c.rot)`);
+  w(`      local hi = math.floor(t / (2 ^ c.rot))`);
+  w(`      local rotated = lo * (2 ^ (8 - c.rot)) + hi`);
+  w(`      local v = (rotated - c.add) % 256`);
+  w(`      if v < 0 then v = v + 256 end`);
+  w(`      return v`);
+  w(`    end`);
+  w(`  end`);
+  w(`  local function ${decB}(slot, enc, c)`);
+  w(`    local v = (enc - c.ba[slot]) % 256`);
+  w(`    if v < 0 then v = v + 256 end`);
+  w(`    return ${bx}(v, c.bx[slot])`);
+  w(`  end`);
+
+  w(`  local function ${LRS}()`);
+  w(`    local n = ${c16}`);
+  w(`    local chars = {}`);
+  w(`    for i = 1, n do chars[i] = ${sA}.char(${c8}) end`);
+  w(`    local s = ${tA}.concat(chars)`);
+  if(flags.strEnc)w(`    return { ${lazyTag} = s }`);
+  else w(`    return s`);
+  w(`  end`);
+
+  w(`  local function ${LRP}()`);
+  w(`    local cAdd = ${c8}`);
+  w(`    local cIM  = ${c8}`);
+  w(`    local cXor = ${c8}`);
+  w(`    local cRot = ${c8}`);
+  w(`    local cFam = ${c8}`);
+  w(`    local cBA = { ${c8}, ${c8}, ${c8} }`);
+  w(`    local cBX = { ${c8}, ${c8}, ${c8} }`);
+  w(`    local cInv = 1`);
+  w(`    for i = 1, 255, 2 do if (cIM * i) % 256 == 1 then cInv = i; break end end`);
+  w(`    local codec = { add = cAdd, inv = cInv, xor = cXor, rot = cRot, fam = cFam, ba = cBA, bx = cBX }`);
+  w(`    local fl = ${c8}`);
+  w(`    local pf = { upvals = {}, consts = {}, protos = {}, code = {} }`);
+  w(`    pf.vararg = fl == 1`);
+  w(`    pf.nparam = ${c8}`);
+  w(`    pf.nstack = ${c8}`);
+  w(`    local nu = ${c8}`);
+  w(`    for i = 1, nu do local a, b = ${c8}, ${c16} pf.upvals[i] = { instack = a, idx = b } end`);
+  w(`    local nk = ${c16}`);
+  w(`    for i = 1, nk do`);
+  w(`      local t = ${c8}`);
+  w(`      if t == 2 then`);
+  w(`        local p = ${c32} local q = ${c32}`);
+  w(`        local v = (p + q) % 4294967296`);
+  w(`        if v >= 2147483648 then v = v - 4294967296 end`);
+  w(`        pf.consts[i] = v`);
+  w(`      elseif t == 1 then`);
+  w(`        local nn = ${c16}`);
+  w(`        local chars = {}`);
+  w(`        for j = 1, nn do`);
+  w(`          local slot = ((j - 1) % 3) + 1`);
+  w(`          chars[j] = ${sA}.char(${decB}(slot, ${c8}, codec))`);
+  w(`        end`);
+  w(`        local s = ${tA}.concat(chars)`);
+  if(flags.strEnc)w(`        pf.consts[i] = { ${lazyTag} = s }`);
+  else w(`        pf.consts[i] = s`);
+  w(`      else ${er}("${rerr()}", 0) end`);
+  w(`    end`);
+  w(`    local np = ${c16}`);
+  w(`    for i = 1, np do pf.protos[i] = ${cproto} end`);
+  w(`    local nc = ${c32}`);
+  w(`    for i = 1, nc do`);
+  w(`      local p1 = ${cprng}`);
+  w(`      local p2 = ${cprng}`);
+  w(`      local o2 = ${bx}(${decOp}(${c8}, codec), ${bnd}(p1, 255))`);
+  w(`      local a2 = ${bx}(${decB}(1, ${c8}, codec), ${bnd}(${rsh}(p1, 8), 255))`);
+  w(`      local bHi = ${decB}(2, ${c8}, codec)`);
+  w(`      local bLo = ${decB}(3, ${c8}, codec)`);
+  w(`      local b2 = (bHi * 256 + bLo) % 65536`);
+  w(`      b2 = ${bx}(b2, ${bnd}(p2, 65535))`);
+  w(`      if b2 >= 32768 then b2 = b2 - 65536 end`);
+  w(`      local c2 = ${bx}(${decB}(1, ${c8}, codec), ${bnd}(${rsh}(p2, 16), 255))`);
+  w(`      pf.code[i] = { o2, a2, b2, c2 }`);
+  w(`    end`);
+  w(`    return pf`);
+  w(`  end`);
+
+  const mainProto=G('mainProto'),authStored=G('authStored'),fnvH=G('fnvH');
+  w(`  local ${mainProto} = ${cproto}()`);
+  w(`  local ${authStored} = ${c8} * 16777216 + ${c8} * 65536 + ${c8} * 256 + ${c8}`);
+  w(`  local ${fnvH} = 2166136261`);
+  w(`  for i = 0, ${pos} - 5 do`);
+  w(`    local b = get_byte(i)`);
+  w(`    local k = ${sA}.byte("${blobKeyStr}", (i % ${blobKeyLen}) + 1)`);
+  w(`    ${fnvH} = ((${bx}(${fnvH}, b) * 33 + k) % 4294967296)`);
+  w(`  end`);
+  w(`  if ${fnvH} ~= ${authStored} then ${er}("${rerr()}", 0) end`);
+  w(`  return ${mainProto}`);
+  w(`end`);
+
+  const mmadd=G('mma'),mmsub=G('mms'),mmmul=G('mmm'),mmdiv=G('mmd'),mmod=G('mmo'),mmpow=G('mmp');
+  w(`local ${mmadd}, ${mmsub}, ${mmmul}, ${mmdiv}, ${mmod}, ${mmpow} = ${S('__add')}, ${S('__sub')}, ${S('__mul')}, ${S('__div')}, ${S('__mod')}, ${S('__pow')}`);
+  const mmidx=G('mmi'),mmnidx=G('mmn'),mmcall=G('mmc'),mmeq=G('mme'),mmlen=G('mml'),mmunm=G('mmu'),mmcat=G('mmx');
+  w(`local ${mmidx}, ${mmnidx}, ${mmcall}, ${mmeq}, ${mmlen}, ${mmunm}, ${mmcat} = ${S('__index')}, ${S('__newindex')}, ${S('__call')}, ${S('__eq')}, ${S('__len')}, ${S('__unm')}, ${S('__concat')}`);
+
+  const getmt=G('gmt');
+  w(`local function ${getmt}(v) local t = ${ty}(v) if t == "table" or t == "userdata" then return ${gm}(v) end return nil end`);
+  const idxF=G('idx');
+  w(`local function ${idxF}(o, k)`);
+  w(`  local t = ${ty}(o)`);
+  w(`  if t == "table" then`);
+  w(`    local v = ${rg}(o, k)`);
+  w(`    if v ~= nil then return v end`);
+  w(`    local m = ${gm}(o)`);
+  w(`    if m then`);
+  w(`      local h = ${rg}(m, ${mmidx})`);
+  w(`      if h ~= nil then`);
+  w(`        if ${ty}(h) == "function" then return h(o, k) end`);
+  w(`        return ${idxF}(h, k)`);
+  w(`      end`);
+  w(`    end`);
+  w(`    return nil`);
+  w(`  elseif t == "string" then return ${sA}[k]`);
+  w(`  elseif t == "userdata" then return o[k] end`);
+  w(`  ${er}("${rerr()}", 0)`);
+  w(`end`);
+  const setF=G('sit');
+  w(`local function ${setF}(o, k, v)`);
+  w(`  if ${ty}(o) == "table" then`);
+  w(`    local m = ${gm}(o)`);
+  w(`    if m == nil or ${rg}(o, k) ~= nil then ${rs}(o, k, v) return end`);
+  w(`    local h = ${rg}(m, ${mmnidx})`);
+  w(`    if h == nil then ${rs}(o, k, v)`);
+  w(`    elseif ${ty}(h) == "function" then h(o, k, v)`);
+  w(`    else ${setF}(h, k, v) end`);
+  w(`    return`);
+  w(`  end`);
+  w(`  o[k] = v`);
+  w(`end`);
+  const nop=G('nop');
+  w(`local function ${nop}(s, a, b)`);
+  w(`  if s == 1 then return a + b end`);
+  w(`  if s == 2 then return a - b end`);
+  w(`  if s == 3 then return a * b end`);
+  w(`  if s == 4 then return a / b end`);
+  w(`  if s == 5 then return a % b end`);
+  w(`  return a ^ b`);
+  w(`end`);
+  const arf=G('ari');
+  w(`local function ${arf}(s, a, b)`);
+  w(`  local ta, tb = ${ty}(a), ${ty}(b)`);
+  w(`  if ta == "number" and tb == "number" then return ${nop}(s, a, b) end`);
+  w(`  local ca, cb = ${tn}(a), ${tn}(b)`);
+  w(`  if ca and cb then return ${nop}(s, ca, cb) end`);
+  w(`  local nm = (s == 1 and ${mmadd}) or (s == 2 and ${mmsub}) or (s == 3 and ${mmmul}) or (s == 4 and ${mmdiv}) or (s == 5 and ${mmod}) or ${mmpow}`);
+  w(`  local m = ${getmt}(a)`);
+  w(`  if m then local h = ${rg}(m, nm) if ${ty}(h) == "function" then return h(a, b) end end`);
+  w(`  m = ${getmt}(b)`);
+  w(`  if m then local h = ${rg}(m, nm) if ${ty}(h) == "function" then return h(b, a) end end`);
+  w(`  ${er}("${rerr()}", 0)`);
+  w(`end`);
+  const cf=G('cat');
+  w(`local function ${cf}(a, b)`);
+  w(`  local ta, tb = ${ty}(a), ${ty}(b)`);
+  w(`  if (ta == "string" or ta == "number") and (tb == "string" or tb == "number") then return a .. b end`);
+  w(`  local m = ${getmt}(a)`);
+  w(`  if m then local h = ${rg}(m, ${mmcat}) if ${ty}(h) == "function" then return h(a, b) end end`);
+  w(`  m = ${getmt}(b)`);
+  w(`  if m then local h = ${rg}(m, ${mmcat}) if ${ty}(h) == "function" then return h(b, a) end end`);
+  w(`  ${er}("${rerr()}", 0)`);
+  w(`end`);
+  const lf=G('lenf');
+  w(`local function ${lf}(v)`);
+  w(`  local t = ${ty}(v)`);
+  w(`  if t == "string" or t == "table" then return #v end`);
+  w(`  local m = ${getmt}(v)`);
+  w(`  if m then local h = ${rg}(m, ${mmlen}) if h ~= nil then if ${ty}(h) == "function" then return h(v) end return h end end end`);
+  w(`  ${er}("${rerr()}", 0)`);
+  w(`end`);
+  const ef=G('eqf'),ltf=G('ltf'),lef=G('lef');
+  w(`local function ${ef}(a, b)`);
+  w(`  if a == b then return true end`);
+  w(`  local ta, tb = ${ty}(a), ${ty}(b)`);
+  w(`  if ta == tb and (ta == "table" or ta == "userdata") then`);
+  w(`    local m = ${getmt}(a)`);
+  w(`    local h = m and ${rg}(m, ${mmeq}) or nil`);
+  w(`    if ${ty}(h) ~= "function" then m = ${getmt}(b) h = m and ${rg}(m, ${mmeq}) or nil end`);
+  w(`    if ${ty}(h) == "function" then return h(a, b) == true end`);
+  w(`  end`);
+  w(`  return false`);
+  w(`end`);
+  w(`local function ${ltf}(a, b) local ta, tb = ${ty}(a), ${ty}(b) if ta == tb and (ta == "number" or ta == "string") then return a < b end ${er}("${rerr()}", 0) end`);
+  w(`local function ${lef}(a, b) local ta, tb = ${ty}(a), ${ty}(b) if ta == tb and (ta == "number" or ta == "string") then return a <= b end ${er}("${rerr()}", 0) end`);
+
+  const envf=G('env');
+  w(`local ${envf}`);
+  w(`do`);
+  w(`  local ok, e = ${pcf}(function() return getfenv(1) end)`);
+  w(`  local base = (ok and ${ty}(e) == "table") and e or nil`);
+  w(`  local fallback = { print = print, warn = warn, error = error, assert = assert, pcall = pcall, xpcall = xpcall, select = select, tonumber = tonumber, tostring = tostring, type = type, pairs = pairs, ipairs = ipairs, next = next, setmetatable = setmetatable, getmetatable = getmetatable, rawget = rawget, rawset = rawset, unpack = unpack, require = require, string = string, math = math, table = table, os = os, bit32 = bit32, coroutine = coroutine, game = game, script = script, workspace = workspace, _G = _G, wait = wait, task = task, tick = tick }`);
+  w(`  ${envf} = ${sm}({}, { __index = function(t, k) local v = ${rg}(t, k) if v ~= nil then return v end if base ~= nil then v = base[k] if v ~= nil then return v end end v = fallback[k] if v ~= nil then return v end return _G[k] end })`);
+  w(`end`);
+
+  const runf=G('run'),mkf=G('mkclo'),P=G('proto'),uvn=G('uvs');
+  w(`local ${runf}`);
+  w(`local function ${mkf}(${P}, frame, ${uvn})`);
+  w(`  local list = {}`);
+  w(`  for i = 1, #${P}.upvals do`);
+  w(`    local d = ${P}.upvals[i]`);
+  w(`    if d.instack == 1 then list[i] = { frame = frame, idx = d.idx }`);
+  w(`    else list[i] = ${uvn}[d.idx + 1] end`);
+  w(`  end`);
+  w(`  return function(...) return ${runf}(${P}, list, ...) end`);
+  w(`end`);
+  w(`${runf} = function(${P}, ${uvn}, ...)`);
+  w(`  local all = { n = ${sel}("#", ...), ... }`);
+  w(`  local regs = {}`);
+  w(`  for i = 1, ${P}.nparam do regs[i - 1] = all[i] end`);
+  w(`  local vargs = { n = 0 }`);
+  w(`  if ${P}.vararg then`);
+  w(`    vargs.n = all.n - ${P}.nparam`);
+  w(`    if vargs.n < 0 then vargs.n = 0 end`);
+  w(`    for i = 1, vargs.n do vargs[i] = all[${P}.nparam + i] end`);
+  w(`  end`);
+  w(`  local code, consts, protos = ${P}.code, ${P}.consts, ${P}.protos`);
+  if(flags.controlFlow){
+    w(`  local pcxEnc, top = ${bx}(1, ${cfMask}), ${P}.nstack`);
+    w(`  while true do`);
+    w(`    local pcx = ${bx}(pcxEnc, ${cfMask})`);
+  }else{
+    w(`  local pcx, top = 1, ${P}.nstack`);
+    w(`  while true do`);
+  }
+  w(`    local ins = code[pcx]`);
+  w(`    pcx = pcx + 1`);
+  w(`    local op = ins[1]`);
+
+  const branches={
+    MOVE:()=>[`regs[ins[2]] = regs[ins[3]]`],
+    LOADK:()=>flags.strEnc?[
+      `local v = consts[ins[3] + 1]`,
+      `if ${ty}(v) == "table" then local enc = ${rg}(v, "${lazyTag}") if enc ~= nil then v = ${G('dstr')}(enc) consts[ins[3] + 1] = v end end`,
+      `regs[ins[2]] = v`
+    ]:[`regs[ins[2]] = consts[ins[3] + 1]`],
+    LOADBOOL:()=>[`regs[ins[2]] = ins[3] == 1`,`if ins[4] == 1 then pcx = pcx + 1 end`],
+    LOADNIL:()=>[`regs[ins[2]] = nil`],
+    GETGLOBAL:()=>[`regs[ins[2]] = ${envf}[consts[ins[3] + 1]]`],
+    SETGLOBAL:()=>[`${envf}[consts[ins[3] + 1]] = regs[ins[2]]`],
+    GETUPVAL:()=>[`local uv = ${uvn}[ins[3] + 1]`,`regs[ins[2]] = uv.frame[uv.idx]`],
+    SETUPVAL:()=>[`local uv = ${uvn}[ins[3] + 1]`,`uv.frame[uv.idx] = regs[ins[2]]`],
+    GETTABLE:()=>[`regs[ins[2]] = ${idxF}(regs[ins[3]], regs[ins[4]])`],
+    SETTABLE:()=>[`${setF}(regs[ins[2]], regs[ins[3]], regs[ins[4]])`],
+    GETFIELD:()=>[`regs[ins[2]] = ${idxF}(regs[ins[4]], consts[ins[3] + 1])`],
+    SETFIELD:()=>[`${setF}(regs[ins[2]], consts[ins[3] + 1], regs[ins[4]])`],
+    NEWTABLE:()=>[`regs[ins[2]] = {}`],
+    SETI:()=>[`regs[ins[2]][ins[3]] = regs[ins[4]]`],
+    CALL:()=>[
+      `local ra = ins[2]`,
+      `local f = regs[ra]`,
+      `local n = ins[3] - 1`,
+      `if n < 0 then n = top - ra end`,
+      `local args = {}`,
+      `for i = 1, n do args[i] = regs[ra + i] end`,
+      `local rn, res`,
+      `if ${ty}(f) == "function" then`,
+      `  rn, res = ${pk}(f(${un}(args, 1, n)))`,
+      `else`,
+      `  local m = ${getmt}(f)`,
+      `  local h = m and ${rg}(m, ${mmcall}) or nil`,
+      `  if ${ty}(h) == "function" then rn, res = ${pk}(h(f, ${un}(args, 1, n))) else ${er}("${rerr()}", 0) end`,
+      `end`,
+      `local want = ins[4] - 1`,
+      `if want < 0 then want = rn end`,
+      `for i = 1, want do regs[ra + i - 1] = res[i] end`,
+      `if ins[4] == 0 then top = ra + want - 1 end`
+    ],
+    RETURN:()=>[
+      `local ra = ins[2]`,
+      `local n = ins[3] - 1`,
+      `if n < 0 then n = top - ra + 1 end`,
+      `local res = {}`,
+      `for i = 1, n do res[i] = regs[ra + i - 1] end`,
+      `return ${un}(res, 1, n)`
+    ],
+    JMP:()=>[`pcx = pcx + ins[3]`],
+    TEST:()=>[`local v = regs[ins[2]]`,`if (v ~= nil and v ~= false) == (ins[4] == 1) then pcx = pcx + 1 end`],
+    EQ:()=>[`if ${ef}(regs[ins[2]], regs[ins[3]]) ~= (ins[4] == 1) then pcx = pcx + 1 end`],
+    LT:()=>[`if ${ltf}(regs[ins[2]], regs[ins[3]]) ~= (ins[4] == 1) then pcx = pcx + 1 end`],
+    LE:()=>[`if ${lef}(regs[ins[2]], regs[ins[3]]) ~= (ins[4] == 1) then pcx = pcx + 1 end`],
+    ADD:()=>[`regs[ins[2]] = ${arf}(1, regs[ins[3]], regs[ins[4]])`],
+    SUB:()=>[`regs[ins[2]] = ${arf}(2, regs[ins[3]], regs[ins[4]])`],
+    MUL:()=>[`regs[ins[2]] = ${arf}(3, regs[ins[3]], regs[ins[4]])`],
+    DIV:()=>[`regs[ins[2]] = ${arf}(4, regs[ins[3]], regs[ins[4]])`],
+    MOD:()=>[`regs[ins[2]] = ${arf}(5, regs[ins[3]], regs[ins[4]])`],
+    POW:()=>[`regs[ins[2]] = ${arf}(6, regs[ins[3]], regs[ins[4]])`],
+    CONCAT:()=>[`local acc = regs[ins[3]]`,`for i = ins[3] + 1, ins[4] do acc = ${cf}(acc, regs[i]) end`,`regs[ins[2]] = acc`],
+    UNM:()=>[`local v = regs[ins[3]]`,`if ${ty}(v) == "number" then regs[ins[2]] = -v else local c = ${tn}(v) if c then regs[ins[2]] = -c else local m = ${getmt}(v) local h = m and ${rg}(m, ${mmunm}) or nil if ${ty}(h) == "function" then regs[ins[2]] = h(v) else ${er}("${rerr()}", 0) end end end`],
+    NOT:()=>[`regs[ins[2]] = not regs[ins[3]]`],
+    LEN:()=>[`regs[ins[2]] = ${lf}(regs[ins[3]])`],
+    CLOSURE:()=>[`regs[ins[2]] = ${mkf}(protos[ins[3] + 1], regs, ${uvn})`],
+    SELF:()=>[`local o = regs[ins[2]]`,`regs[ins[2]] = ${idxF}(o, consts[ins[3] + 1])`,`regs[ins[2] + 1] = o`],
+    VARARG:()=>[`local ra = ins[2]`,`local n = ins[3] - 1`,`if n < 0 then n = vargs.n end`,`for i = 1, n do regs[ra + i - 1] = vargs[i] end`,`if ins[3] == 0 then top = ra + n - 1 end`],
+    FORPREP:()=>[`local base = ins[2]`,`local init, limit, step = regs[base], regs[base + 1], regs[base + 2]`,`if ${ty}(init) ~= "number" then init = ${tn}(init) end`,`if ${ty}(limit) ~= "number" then limit = ${tn}(limit) end`,`if ${ty}(step) ~= "number" then step = ${tn}(step) end`,`if init == nil or limit == nil or step == nil or step == 0 then ${er}("${rerr()}", 0) end`,`regs[base], regs[base + 1], regs[base + 2] = init, limit, step`,`if (step > 0 and init > limit) or (step < 0 and init < limit) then pcx = pcx + ins[3] else regs[base + 3] = init end`],
+    FORLOOP:()=>[`local base = ins[2]`,`local v = regs[base] + regs[base + 2]`,`regs[base] = v`,`if (regs[base + 2] > 0 and v <= regs[base + 1]) or (regs[base + 2] < 0 and v >= regs[base + 1]) then regs[base + 3] = v pcx = pcx + ins[3] end`],
+    TFORCALL:()=>[`local base = ins[2]`,`local f = regs[base]`,`local res`,`if ${ty}(f) == "function" then res = { f(regs[base + 1], regs[base + 2]) } else local m = ${getmt}(f) local h = m and ${rg}(m, ${mmcall}) or nil if ${ty}(h) == "function" then res = { h(f, regs[base + 1], regs[base + 2]) } else ${er}("${rerr()}", 0) end end`,`if res[1] ~= nil then for i = 1, ins[3] do regs[base + 3 + i] = res[i] end pcx = pcx + 1 end`]
+  };
+
+  const order=OPS.slice();
+  if(flags.shuffle)shuffleArr(order);
+  order.forEach((name,i)=>{
+    const num=o.opmap[OPS.indexOf(name)];
+    w(`${i===0?'if':'elseif'} op == ${num} then`);
+    for(const ln of branches[name]())w('  '+ln);
+  });
+  if(flags.opcodeDecoys){
+    const used=new Set(o.opmap), count=3+ri(5), fake=[];
+    while(fake.length<count){const n=40+ri(88);if(!used.has(n)&&!fake.includes(n)){fake.push(n);used.add(n);}}
+    for(const n of fake){
+      const a=G('opA'+n),b=G('opB'+n);
+      w(`elseif op == ${n} then local ${a}=${ri(65536)} local ${b}=(${a}*${1+ri(31)}+${ri(255)})%65537 local _=${b}`);
+    }
+  }
+  w(`else`);
+  w(`  ${er}("${rerr()}", 0)`);
+  w(`end`);
+  if(flags.controlFlow)w(`    pcxEnc = ${bx}(pcx, ${cfMask})`);
+  w(`  end`);
+  w(`end`);
+
+  const mp=G('mainp'),mf=G('mainf');
+  if(flags.paged && o.pages && o.pages.length){
+    const pg=G('pages'),ord=G('order'),ld=G('loadpages'),pc=G('pagecheck'),ps=G('parts'),fk=G('fk'),fl=G('fl'),fc=G('fc'),fd=G('fd');
+    const pageRows=o.pages.map(x=>`{["${fk}"]=${x.slot},["${fl}"]=${x.data.length},["${fc}"]=${x.sum},["${fd}"]="${escLuaStr(transport(x.data))}"}`).join(',');
+    const orderRows=o.pageOrder.join(',');
+    w(`local ${pg} = {${pageRows}}`);
+    w(`local ${ord} = {${orderRows}}`);
+    w(`local function ${pc}(s) local a,b=1,0 for i=1,#s do a=(a+${sA}.byte(s,i))%65521 b=(b+a)%65521 end return (b*65536+a)%4294967296 end`);
+    w(`local function ${ld}() local ${ps}={} for i=1,#${ord} do local p=${pg}[${ord}[i]] local raw=p["${fd}"] ${v2?`raw=${p85d}(raw) `:``}if not p or #raw~=p["${fl}"] or ${pc}(raw)~=p["${fc}"] then ${er}("${rerr()}",0) end ${ps}[i]=raw end return ${tA}.concat(${ps}) end`);
+    w(`local blob_dec, is_buf_b64 = ${b64d}(${ld}())`);
+  }else{
+    w(`local blob_dec, is_buf_b64 = ${b64d}(${v2?`${p85d}("${transport(o.blob)}")`:`"${o.blob}"`})`);
+  }
+  w(`local blob_unx, is_buf = ${ux}(blob_dec, is_buf_b64)`);
+  w(`local ${mp} = ${desf}(blob_unx, is_buf)`);
+  w(`local ${mf} = ${mkf}(${mp}, nil, nil)`);
+  w(`return ${mf}()`);
+
+  if(one){
+    const bannerEnd = L.findIndex((ln,i)=>i>0 && ln.trim()!=='' && !ln.trim().startsWith('--') && !ln.includes(']]') && !ln.includes(']=]'));
+    if(bannerEnd>0){
+      const head = L.slice(0,bannerEnd).join('\n');
+      const body = L.slice(bannerEnd).filter(x=>x.trim()!=='').join('\n');
+      return head + '\n' + body;
+    }
+    return L.filter(x=>x.trim()!=='').join('\n');
+  }
+  return L.join('\n');
+}
+
+function packReturnTable(code){
+  let level=0, eq='';
+  while(code.includes(']'+eq+']')){level++;eq='='.repeat(level);}
+  const key=(secureU32()>>>0).toString(10);
+  return `return({[${key}]=[${eq}[${code}]${eq}]})`;
+}
+
+/* ---- Preset profiles ---- */
+const PROFILES = {
+  light:  { packWrapper:true, oneLine:true, banner:true, paged:false, v2:false, junk:false, strEnc:true, controlFlow:false, shuffle:true,  deadCode:false, decoy:false, antiHook:false, tamperDecoys:false, opcodeDecoys:false, stealth:false, adaptiveJunk:false, junkMaxBytes:0 },
+  medium: { packWrapper:true, oneLine:true, banner:true, paged:true,  v2:false, junk:true,  strEnc:true, controlFlow:true,  shuffle:true,  deadCode:true,  decoy:true,  antiHook:true,  tamperDecoys:true,  opcodeDecoys:true,  stealth:true,  adaptiveJunk:true,  junkMaxBytes:4096 },
+  max:    { packWrapper:true, oneLine:true, banner:true, paged:true,  v2:true,  junk:true,  strEnc:true, controlFlow:true,  shuffle:true,  deadCode:true,  decoy:true,  antiHook:true,  tamperDecoys:true,  opcodeDecoys:true,  stealth:true,  adaptiveJunk:true,  junkMaxBytes:16384 }
+};
+
+function obfuscate(src,opts){
+  opts={...opts};
+  const srcBytesLen = toUTF8(src).length;
+  if(srcBytesLen > 256*1024)
+    throw new Error('Source exceeds 256 KiB ('+(srcBytesLen/1024).toFixed(1)+' KiB); split the file or run offline.');
+  if(opts.adaptiveJunk&&opts.junk&&opts.profile!=='release'){
+    opts.junkMaxBytes=Math.min(Number(opts.junkMaxBytes)||0,Math.min(32*1024,Math.max(512,srcBytesLen*2)));
+  }
+  _s=secureU32();
+  _used.clear();
+
+  let buildId='HB-';
+  for(let _b=0;_b<10;_b++)buildId+='0123456789ABCDEF'[ri(16)];
+
+  const prngSeed=secureU32();
+  let prng_state=prngSeed;
+  function prng_next(){
+    prng_state^=(prng_state<<13)>>>0;
+    prng_state^=prng_state>>>17;
+    prng_state^=(prng_state<<5)>>>0;
+    return prng_state>>>0;
+  }
+
+  const srcLines = src.split('\n');
+  let ast=new Parser(tokenize(src), srcLines).parse();
+  if(opts.neutralizeEnv)ast={...ast,body:neutralizeEnvBlock(ast.body)};
+  const main=compile(ast,opts);
+  if(opts.deadCode){
+    const cs='0123456789!@#$%^&*_+;:.XZQ';
+    (function walk(p){
+      const n=6+ri(15);
+      for(let i=0;i<n;i++){
+        let s=''; const L=6+ri(30);
+        for(let j=0;j<L;j++)s+=cs[ri(cs.length)];
+        p.consts.push(s);
+      }
+      p.protos.forEach(walk);
+    })(main);
+  }
+  const opmap=OPS.map((_,i)=>i);
+  if(opts.shuffle)shuffleArr(opmap);
+  const strKey=randomKeyBytes(10+ri(8));
+  const blobKey=randomKeyBytes(18+ri(14));
+  const stats={instrs:0,consts:0,protos:0};
+  const bytes=[72,65,70,49];
+  const chunkCounter = { n: 0 };
+  serializeProto(main, bytes, opmap, stats, prng_next, { strKey }, chunkCounter);
+
+  // FNV over proto tree
+  let auth=2166136261;
+  for(let i=0;i<bytes.length;i++) auth=((((auth^bytes[i])>>>0)*33)+blobKey[i%blobKey.length])>>>0;
+  w32(bytes,auth);
+
+  // Adler over proto tree + FNV
+  let s1=0,s2=0;
+  for(let i=0;i<bytes.length;i++){ s1=(s1+bytes[i])%65521; s2=(s2+s1)%65521; }
+  w32(bytes,(s2*65536)+s1);
+
+  // ---- payload self-check ----
+  let verifyStats = null;
+  try {
+    verifyStats = bgVerifyPayload(new Uint8Array(bytes), blobKey);
+  } catch (e) {
+    throw new Error('payload self-check failed: ' + e.message);
+  }
+  stats.verify = verifyStats;
+
+  const alphabet=shuffledAlphabet();
+  const blob=b64encode(xorBytes(bytes,blobKey),alphabet);
+  let pages=null,pageOrder=null;
+  if(opts.paged){
+    const pageSize=192+ri(193);
+    const raw=[];
+    for(let i=0;i<blob.length;i+=pageSize)raw.push(blob.slice(i,i+pageSize));
+    pages=raw.map((data,i)=>({slot:i+1,data,sum:pageAdler(data)}));
+    const originalSlots=pages.map(x=>x.slot);
+    pageOrder=pages.map((_,i)=>i+1);
+    shuffleArr(pageOrder);
+    pages=pageOrder.map(i=>pages[i-1]);
+    pageOrder=originalSlots.map(slot=>pages.findIndex(p=>p.slot===slot)+1);
+  }
+  const vmOptions={blob,blobKey,strKey,alphabet,opmap,prngSeed,buildId,pages,pageOrder,flags:opts};
+  const rawCode=genVM(vmOptions);
+
+  // ---- Lua self-check: WARNING ONLY, not fatal ----
+  // The payload self-check above already validated bytecode structure.
+  // Our Lua parser can produce false positives on valid Lua, so we log
+  // a warning and continue rather than blocking output.
+  let luaWarn = null;
+  try {
+    const toks = tokenize(rawCode);
+    for (const t of toks) if (t.type === 'name' && t.value === 'undefined')
+      throw new Error('internal error: unresolved symbol');
+    new Parser(toks, rawCode.split('\n')).parse();
+  } catch (e) {
+    luaWarn = e.message;
+    if (typeof console !== 'undefined') {
+      console.warn('[HAFIY] Lua self-check warning:', e.message);
+      console.warn('[HAFIY] Generated payload:\n', rawCode);
+    }
+  }
+
+  const packed=opts.packWrapper?packReturnTable(rawCode):rawCode;
+  const code=(opts.banner?'-- https://youtube.com/@hafiyscript\n':'')+packed;
+  const outputBytes=toUTF8(code).length;
+  if(outputBytes>3*1024*1024)throw new Error('output exceeds the 3 MiB safety limit ('+Math.ceil(outputBytes/1024)+' KiB)');
+
+  stats.junkBytes=vmOptions.junkBytes||0;
+  stats.junkTarget=opts.junkMaxBytes||0;
+  stats.outputBytes=outputBytes;
+  stats.packed=!!opts.packWrapper;
+  stats.bytecode = {
+    protos: verifyStats.protos,
+    instrs: verifyStats.instrs,
+    consts: verifyStats.consts,
+    codecFamilies: verifyStats.codecFamilies,
+  };
+  return {code,stats,junkBytes:stats.junkBytes,buildId,luaWarn};
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { obfuscate, tokenize, Parser };
+} else if (typeof window !== 'undefined') {
+  window.obfuscate = obfuscate;
+}
+
+/* ---- UI handlers ---- */
+const LS_KEY = 'hafiy_opts_v1';
+function loadOpts(){ try{ const raw = lsG(LS_KEY); if(!raw) return null; return JSON.parse(raw); }catch(e){ return null; } }
+function saveOpts(o){ try{ lsS(LS_KEY, JSON.stringify(o)); }catch(e){} }
+function applyOpts(){
+  const o = loadOpts();
+  if(!o) return;
+  if(o.profile) document.getElementById('profile').value = o.profile;
+  if(typeof o.anti === 'boolean') document.getElementById('anti').checked = o.anti;
+  if(typeof o.junk === 'boolean') document.getElementById('safeJunk').checked = o.junk;
+}
+function snapshotOpts(){
+  return { profile: document.getElementById('profile').value,
+           anti: document.getElementById('anti').checked,
+           junk: document.getElementById('safeJunk').checked };
+}
+applyOpts();
+['profile','anti','safeJunk'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => saveOpts(snapshotOpts()));
+});
+function showErr(msg, detail){
+  const p = document.getElementById('errPanel');
+  p.style.display = 'block';
+  p.textContent = msg + (detail ? '\n\n' + detail : '');
+}
+function hideErr(){
+  const p = document.getElementById('errPanel');
+  p.style.display = 'none';
+  p.textContent = '';
+}
+function runObf(){
+  var st=document.getElementById("st");
+  var src=document.getElementById("si").value;
+  hideErr();
+  if(!src.trim()){st.textContent="Nothing!";st.className="bad";return}
+  st.textContent="Obfuscating...";
+  st.className="";
+  setTimeout(function(){
+    try {
+      var profile = document.getElementById("profile").value;
+      var useJunk = document.getElementById("safeJunk").checked;
+      var base = PROFILES[profile] || PROFILES.medium;
+      var opts = Object.assign({}, base, {
+        neutralizeEnv: document.getElementById("anti").checked,
+        junk: useJunk && base.junk,
+        deadCode: useJunk && base.deadCode,
+      });
+      var result = obfuscate(src, opts);
+      document.getElementById("so").value = result.code;
+      var b = result.stats.bytecode || {};
+      var junkInfo = result.junkBytes ? (", junk "+result.junkBytes+"B") : "";
+      var bcInfo = b.protos ? (" · "+b.protos+" proto"+(b.protos===1?"":"s")+", "+b.instrs+" instr"+(b.instrs===1?"":"s")+", "+b.consts+" K") : "";
+      var famInfo = b.codecFamilies ? (" · vmFam "+b.codecFamilies[0]+"/"+b.codecFamilies[1]+"/"+b.codecFamilies[2]) : "";
+      if (result.luaWarn) {
+        st.textContent = "⚠ " + result.stats.outputBytes + " B" + bcInfo + famInfo + junkInfo + " · parse warning";
+        st.className = "bad";
+        showErr("Lua self-check warning (output was still generated):", result.luaWarn);
+      } else {
+        st.textContent = "✓ " + result.stats.outputBytes + " B" + bcInfo + famInfo + junkInfo + " · " + (result.buildId||"");
+        st.className = "";
+      }
+      saveOpts(snapshotOpts());
+    } catch(e) {
+      st.textContent = "✗ " + e.message.split('\n')[0];
+      st.className = "bad";
+      showErr("Obfuscation failed:", e.message);
+      console.error(e);
+    }
+  }, 20);
+}
+document.getElementById("si").addEventListener("keydown", function(e){
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); runObf(); }
+});
+document.getElementById("si").addEventListener("input", function(){
+  var n = this.value.length;
+  var st = document.getElementById("st");
+  if (!n) { st.textContent = ""; st.className = ""; return; }
+  var est = Math.round(n * 1.7) + 14000;
+  st.textContent = n + " B src → ~" + (est/1024).toFixed(1) + " KiB est";
+  st.className = "";
+});
+function dl(){
+  var out = document.getElementById("so").value;
+  if(!out.trim()) return toastMsg("Nothing!", 1);
+  var blob = new Blob([out], {type:"text/plain"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "hafiy_" + Date.now() + ".lua";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  toastMsg("Downloaded!");
+}
+
+if(lsG("hafiyKey")==="1")enter();
+</script>
+</body>
+</html>
